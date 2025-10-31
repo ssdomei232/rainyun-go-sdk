@@ -83,3 +83,14 @@ type UserInfo struct {
 		CertifyAuditNote string `json:"CertifyAuditNote"`
 	} `json:"data"`
 }
+
+type UserRewardProducts struct {
+	Code int `json:"code"`
+	Data struct {
+		Rcs []interface{} `json:"rcs"`
+		Rvh []interface{} `json:"rvh"`
+		Rgs []interface{} `json:"rgs"`
+		Ros []interface{} `json:"ros"`
+		Rbm []interface{} `json:"rbm"`
+	} `json:"data"`
+}
