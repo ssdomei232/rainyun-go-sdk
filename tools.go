@@ -2,30 +2,24 @@ package rainyun_go_sdk
 
 import "encoding/json"
 
-type StandardQueryParameters struct {
+type RCSQueryParameters struct {
 	ColumnFilters struct {
+		RcsID string `json:"rcs.ID"`
 	} `json:"columnFilters"`
-	Sort    []StandardQueryParametersSort `json:"sort"`
-	Page    int                           `json:"page"`    // 页码
-	PerPage int                           `json:"perPage"` // 每页显示的行数
+	Sort    []interface{} `json:"sort"`
+	Page    int           `json:"page"`
+	PerPage int           `json:"perPage"`
 }
 
-type StandardQueryParametersSort struct {
-	Field string `json:"field"`
-	Type  string `json:"type"`
-}
-
-// 编码标准查询参数,sort为可选参数,不需要排序就直接传nil
-// sort 示例: [{"field":"Time","type":"asc"}]
-func MarshalStandardQueryParameters(id int, sort []StandardQueryParametersSort, page int, perPage int, start int, end int) string {
-	if sort == nil {
-		sort = []StandardQueryParametersSort{}
-	}
-
-	var queryParameters StandardQueryParameters = StandardQueryParameters{
+// 编码RCS查询参数
+func MarshalRCSQueryParameters(id int, page int, perPage int) string {
+	queryParameters := RCSQueryParameters{
 		ColumnFilters: struct {
-		}{},
-		Sort:    sort,
+			RcsID string `json:"rcs.ID"`
+		}{
+			RcsID: string(rune(id)),
+		},
+		Sort:    []interface{}{},
 		Page:    page,
 		PerPage: perPage,
 	}

@@ -1,5 +1,7 @@
 package rainyun_go_sdk
 
+import "fmt"
+
 /* =============用户部分============= */
 
 // 获取用户信息.
@@ -18,21 +20,6 @@ func (c *Client) GetUserRewardPruducts() (*UserRewardProducts, error) {
 
 	var resp UserRewardProducts
 	err := c.DoRequest("GET", path, nil, &resp)
-
-	return &resp, err
-}
-
-// 获取用户日志.
-// options: 标准查询参数 可以用 MarshalStandardQueryParameters 获取.
-// log_type: 日志类型: "user/": 账号变动日志, "consume/": 消费记录, "user/expense/unsubscribe": 退订记录.
-func (c *Client) GetUserLogs(options string, log_type string) (*UserLogsResponse, error) {
-	path := "/user/logs"
-
-	var resp UserLogsResponse
-	err := c.DoRequest("GET", path, map[string]string{
-		"options":  options,
-		"log_type": log_type,
-	}, &resp)
 
 	return &resp, err
 }
@@ -77,4 +64,51 @@ func (c *Client) RedeemPointsForItem(id int) (*BasicOperationResponse, error) {
 	return &resp, err
 }
 
-/* ==============域名============== */
+/* ==============RCS============== */
+
+// 设置IP描述
+// id: RCS ID, ip: ip address, desc: description
+func (c *Client) SetRcsEipDescription(id int, ip string, desc string) (*BasicOperationResponse, error) {
+	path := "/product/rcs/{id}/eip/description"
+
+	req := SetRcsEipDescriptionRequest{
+		Description: desc,
+		IP:          ip,
+	}
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
+
+// 获取 RCS 列表
+// options: RCS查询参数 可以用 MarshalRCSQueryParameters 获取.
+func (c *Client) GetRcsList(options string) (*RcsListResponse, error) {
+	path := "/product/rcs"
+
+	var resp RcsListResponse
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 创建 RCS
+func (c *Client) CreateRcs(req *CreateRcsRequest) (*CreateRcsResopnse, error) {
+	path := "/product/rcs/"
+
+	var resp CreateRcsResopnse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
+
+// 获取RCS详情
+func (c *Client) GetRcsDetails(id int) (*RcsDetails, error) {
+	path := fmt.Sprintf("/product/rcs/%d/", id)
+
+	var resp RcsDetails
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
