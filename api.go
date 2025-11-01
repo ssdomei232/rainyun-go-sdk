@@ -112,3 +112,106 @@ func (c *Client) GetRcsDetails(id int) (*RcsDetails, error) {
 
 	return &resp, err
 }
+
+// RCS创建备份
+// id: RCS ID, label: 备份名称
+func (c *Client) CreateRcsBackup(id int, label string) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/backup/", id)
+
+	req := CreateRcsBackupRequest{
+		Label: label,
+	}
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, req, resp)
+
+	return &resp, err
+}
+
+// RCS删除备份
+// id: RCS ID, bid: 备份ID
+func (c *Client) DeleteRcsBackup(id int, bid int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/backup/%d/", id, bid)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("DELETE", path, nil, &resp)
+
+	return &resp, err
+}
+
+// RCS取消备份
+// id: RCS ID, bid: 备份ID
+func (c *Client) CancelRcsBackup(id int, bid int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/backup/%d/cancel", id, bid)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, nil, &resp)
+
+	return &resp, err
+}
+
+// RCS还原备份
+// id: RCS ID, bid: 备份ID
+func (c *Client) RestoreRcsBackup(id int, bid int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/backup/%d/restore", id, bid)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, nil, &resp)
+
+	return &resp, err
+}
+
+// RCS开启每日自动备份
+// id: RCS ID
+func (c *Client) EnableRcsAutoBackup(id int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/backup/setting", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("PATCH", path, nil, &resp)
+
+	return &resp, err
+}
+
+// RCS重装系统
+// id: RCS ID
+func (c *Client) ReinstallRcs(id int, req *ReinstallRcsRequest) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/changeos", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
+
+// RCS管理弹性云盘
+// id: RCS ID
+func (c *Client) RcsManagesElasticCloudDisks(id int, req *RcsManagesElasticCloudDisksRequest) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/edisk/", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
+
+// 创建并绑定弹性IP到RCS
+// id: RCS ID
+func (c *Client) CreateAndBindElasticIpToRcs(id int, req *CreateAndBindElasticIpToRcsRequest) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/eip/", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
+
+// 更换IP
+// id: RCS ID
+func (c *Client) ChangeIP(id int, req *ChangeIPRequest) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/eip/change", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}

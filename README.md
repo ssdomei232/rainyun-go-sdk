@@ -55,6 +55,9 @@ client := rain.NewClient("your-real-api-key")
 - [ ] ros管理  
 - [ ] rgs管理  
 - [ ] 工单管理  
-- [ ] 裸金属管理  
 - [ ] 二级面板  
-- [ ] 域名管理  
+
+短期内不会支持的操作(如果你有这种操作的请求和返回示例欢迎发到issue中或提PR):
+
+- [ ] 裸金属管理(没钱测试)  
+- [ ] 域名管理(我建议你买了直接转到cloudflare/tx/alidns)  

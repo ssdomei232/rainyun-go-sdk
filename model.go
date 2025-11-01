@@ -17,6 +17,10 @@ const (
 	CodeOutOfStock Code = 30023
 	// CodeApikeyError 密钥认证错误或已失效
 	CodeApikeyError Code = 30039
+	// CodeRequiresSecondaryVerification 需要二次验证
+	CodeRequiresSecondaryVerification Code = 30043
+	// CodeTheCurrentStateOfTheProductCannotPerformThisOperation 产品当前状态无法执行此操作
+	CodeTheCurrentStateOfTheProductCannotPerformThisOperation Code = 70026
 )
 
 // 基础响应
@@ -438,7 +442,7 @@ type CreateRcsRequest struct {
 	OsID         int    `json:"os_id"`          // 系统ID
 	WithEipNum   int    `json:"with_eip_num"`   // 创建IP数量
 	WithEipFlags string `json:"with_eip_flags"` // 是否开启高防，us_ddosip -> 美国高防，nb_ddosip -> 宁波高防
-	WithEipType  string `json:"with_eip_type"`  // IPv4(默认)/IPv6
+	WithEipType  string `json:"with_eip_type"`  // ipv4(默认)/ipv6
 	WithCouponID int    `json:"with_coupon_id"` // 优惠券ID
 	Try          bool   `json:"try"`            // 是否为试用
 	NodeUUID     string `json:"node_uuid"`      // 指定节点(管理员可用，用户不可用)
@@ -850,9 +854,60 @@ type RcsDetails struct {
 			Num7  int `json:"7"`
 			Num31 int `json:"31"`
 		} `json:"RenewPointPrice"`
-		FastInstallAppTask []interface{} `json:"FastInstallAppTask"`
-		VNets              []interface{} `json:"VNets"`
+		FastInstallAppTask []any `json:"FastInstallAppTask"`
+		VNets              []any `json:"VNets"`
 	} `json:"data"`
+}
+
+// RCS创建备份
+type CreateRcsBackupRequest struct {
+	Label string `json:"label"` // 备份名称
+}
+
+// RCS重装系统
+type ReinstallRcsRequest struct {
+	AppVars []struct {
+		AppID int  `json:"app_id"`
+		Retry bool `json:"retry"` // 重发之前的任务,此项存在时,无需传入参数
+		Vars  any  `json:"vars"`
+	} `json:"app_vars"` // 当空数组时,进行单次任务下发
+	OsID     int  `json:"os_id"`     // 系统ID
+	ResetOsd bool `json:"reset_osd"` // 重置系统盘容量
+}
+
+// RCS管理弹性云盘
+type RcsManagesElasticCloudDisksRequest struct {
+	Actions []struct {
+		Type   string `json:"type"`   // 操作类型: expand: 扩容, create: 创建
+		Action any    `json:"action"` // 操作参数,RcsManagesElasticCloudDisksExpand或RcsManagesElasticCloudDisksCreate
+	} `json:"actions"`
+}
+
+// RCS管理弹性云盘-扩容
+type RcsManagesElasticCloudDisksExpand struct {
+	EdiskID  int  `json:"edisk_id"`   // 弹性云盘ID
+	SizeInGb int  `json:"size_in_gb"` // 操作容量
+	Backup   bool `json:"backup"`     // 支持备份
+}
+
+// RCS管理弹性云盘-创建
+type RcsManagesElasticCloudDisksCreate struct {
+	SizeInGb int    `json:"size_in_gb"` // 操作容量
+	DiskType string `json:"disk_type"`  // 磁盘类型(ssd/hdd)
+	Backup   bool   `json:"backup"`     // 支持备份
+	Tag      string `json:"tag"`        // 标签
+}
+
+// 创建并绑定弹性IP到RCS
+type CreateAndBindElasticIpToRcsRequest struct {
+	WithFlags  string `json:"with_flags"`   // IP特征(可选): 应该是高防: us_ddosip -> 美国高防，nb_ddosip -> 宁波高防
+	WithIPNum  int    `json:"with_ip_num"`  // IP数量
+	WithIPType string `json:"with_ip_type"` // ipv4/ipv6
+}
+
+// 更换IP
+type ChangeIPRequest struct {
+	IP string `json:"ip"` // IP地址
 }
 
 const (
