@@ -57,4 +57,24 @@ func (c *Client) PostCouponsToPointsMall(req *PostCouponsToPointsMallRequest) (*
 	return &resp, err
 }
 
+// 获取积分商城商品列表
+func (c *Client) GetPointsMallItems() (*PointsMallItemsResponse, error) {
+	path := "/user/reward/items"
+
+	var resp PointsMallItemsResponse
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 兑换积分物品
+func (c *Client) RedeemPointsForItem(id int) (*BasicOperationResponse, error) {
+	path := "/user/reward/items"
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, RedeemPointsForItemRequest{ItemID: id}, &resp)
+
+	return &resp, err
+}
+
 /* ==============域名============== */

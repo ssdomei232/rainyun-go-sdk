@@ -13,6 +13,8 @@ const (
 	CodeConditionsNotMet Code = 30011
 	// CodeCorrespondingUserCannotBeFound 无法找到对应的用户
 	CodeCorrespondingUserCannotBeFound Code = 30013
+	// CodeOutOfStock 缺货
+	CodeOutOfStock Code = 30023
 	// CodeApikeyError 密钥认证错误或已失效
 	CodeApikeyError Code = 30039
 )
@@ -192,6 +194,76 @@ type PostCouponsToPointsMallRequest struct {
 	UsableProduct  string `json:"usable_product"`  // 可用产品(默认全部),","分隔: renew,create,upgrade
 	UsableScenes   string `json:"usable_scenes"`   // 适用操作(默认全部),","分隔: rvh,rcs,rgs,ros,rbm
 	Value          int    `json:"value"`           // 直减(元)/折扣(折), 折扣时:1~9:一~九折；11~99:一一~九九折
+}
+
+// 兑换积分物品
+type RedeemPointsForItemRequest struct {
+	ItemID int `json:"item_id"`
+}
+
+// 积分商城物品响应
+type PointsMallItemsResponse struct {
+	Code int `json:"code"`
+	Data []struct {
+		ID             int    `json:"id"`
+		Name           string `json:"name"`
+		Points         int    `json:"points"`
+		Type           string `json:"type"`
+		AvailableStock int    `json:"available_stock"`
+		FriendlyName   string `json:"friendly_name"`
+		ItemData       struct {
+			Color           string      `json:"color,omitempty"`
+			FriendlyName    string      `json:"friendly_name,omitempty"`
+			UsableScenes    string      `json:"usable_scenes,omitempty"`
+			AvailableDays   int         `json:"available_days,omitempty"`
+			UsableProduct   string      `json:"usable_product,omitempty"`
+			BaseLimit       int         `json:"base_limit,omitempty"`
+			PublicPoint     int         `json:"public_point,omitempty"`
+			Type            string      `json:"type,omitempty"`
+			UsableDuration  string      `json:"usable_duration,omitempty"`
+			UsablePlanID    int         `json:"usable_plan_id,omitempty"`
+			Value           interface{} `json:"value,omitempty"`
+			ProductType     string      `json:"product_type,omitempty"`
+			ProductSubtype  string      `json:"product_subtype,omitempty"`
+			DurationSeconds int         `json:"duration_seconds,omitempty"`
+			ProductConfig   struct {
+				OsID         int    `json:"os_id"`
+				PlanID       int    `json:"plan_id"`
+				Subtype      string `json:"subtype"`
+				Duration     int    `json:"duration"`
+				PayMode      string `json:"pay_mode"`
+				PanelUser    string `json:"panel_user"`
+				EggTypeID    int    `json:"egg_type_id"`
+				WithCoupon   int    `json:"with_coupon"`
+				CPULimitMode bool   `json:"cpu_limit_mode"`
+				Config       struct {
+					CPU        int `json:"cpu"`
+					Backup     int `json:"backup"`
+					Memory     int `json:"memory"`
+					NetIn      int `json:"net_in"`
+					NetOut     int `json:"net_out"`
+					Database   int `json:"database"`
+					BaseDisk   int `json:"base_disk"`
+					DataDisk   int `json:"data_disk"`
+					Allocation int `json:"allocation"`
+				} `json:"config"`
+			} `json:"product_config,omitempty"`
+			Desc    string `json:"desc,omitempty"`
+			ImgURL  string `json:"img_url,omitempty"`
+			DescURL string `json:"desc_url,omitempty"`
+		} `json:"item_data"`
+		BuyLimit      int    `json:"buy_limit"`
+		SenderID      int    `json:"sender_id"`
+		FirstSend     bool   `json:"first_send"`
+		ByInvite      bool   `json:"by_invite"`
+		Color         string `json:"color"`
+		Order         int    `json:"order"`
+		PublicTime    int    `json:"public_time"`
+		EndDate       int    `json:"end_date"`
+		AutoRefresh   int    `json:"auto_refresh"`
+		RefreshLimit  int    `json:"refresh_limit"`
+		MoneyRequired int    `json:"money_required"`
+	} `json:"data"`
 }
 
 const (
