@@ -3,12 +3,16 @@ package rainyun_go_sdk
 type Code int
 
 const (
-	// CodeSuccess 成功
-	CodeSuccess Code = 200
-	// 密钥认证错误或已失效
-	CodeApikeyError Code = 30039
 	// CodeInvalidInputParameter 输入参数无效
 	CodeInvalidInputParameter Code = 10002
+	// CodeVerificationCodeVerificationFailed 验证码验证失败
+	CodeVerificationCodeVerificationFailed Code = 10004
+	// CodeNeedLogin 需要登录
+	CodeNeedLogin Code = 30002
+	// CodeConditionsNotMet 未达条件
+	CodeConditionsNotMet Code = 30011
+	// CodeApikeyError 密钥认证错误或已失效
+	CodeApikeyError Code = 30039
 )
 
 type BaseResponse struct {

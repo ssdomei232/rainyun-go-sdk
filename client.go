@@ -47,25 +47,9 @@ func (c *Client) DoRequest(method, endpoint string, reqData any, respData any) e
 	// 错误处理
 	if resp.StatusCode() == 200 {
 		return err
-	} else if resp.StatusCode() == 403 {
-		var baseResp BaseResponse
-		json.Unmarshal(resp.Body(), &baseResp)
-
-		if baseResp.Code == CodeApikeyError {
-			return fmt.Errorf("apikey error")
-		}
-
-		return fmt.Errorf("unknown error")
-	} else if resp.StatusCode() == 400 {
-		var baseResp BaseResponse
-		json.Unmarshal(resp.Body(), &baseResp)
-
-		if baseResp.Code == CodeInvalidInputParameter {
-			return fmt.Errorf("invalid input parameter")
-		}
-
-		return fmt.Errorf("unknown error")
 	} else {
-		return fmt.Errorf("unknown error")
+		var baseResp BaseResponse
+		json.Unmarshal(resp.Body(), &baseResp)
+		return fmt.Errorf(fmt.Sprint(baseResp.Code))
 	}
 }
