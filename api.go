@@ -1,6 +1,6 @@
 package rainyun_go_sdk
 
-/* =============用户信息部分============= */
+/* =============用户部分============= */
 
 // GetUserInfo 获取用户信息.
 func (c *Client) GetUserInfo() (*UserInfo, error) {
@@ -33,6 +33,16 @@ func (c *Client) GetUserLogs(options string, log_type string) (*UserLogsResponse
 		"options":  options,
 		"log_type": log_type,
 	}, &resp)
+
+	return &resp, err
+}
+
+// PublishCouponsToLowerLevelUsers 发布优惠券给下级用户
+func (c *Client) PublishCouponsToLowerLevelUsers(req *PublishCouponsToLowerLevelUsersRequest) (*PublishCouponsToLowerLevelUsersResponse, error) {
+	path := "/user/vip/coupon"
+
+	var resp PublishCouponsToLowerLevelUsersResponse
+	err := c.DoRequest("POST", path, req, &resp)
 
 	return &resp, err
 }

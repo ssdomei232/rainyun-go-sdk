@@ -11,6 +11,8 @@ const (
 	CodeNeedLogin Code = 30002
 	// CodeConditionsNotMet 未达条件
 	CodeConditionsNotMet Code = 30011
+	// CodeCorrespondingUserCannotBeFound 无法找到对应的用户
+	CodeCorrespondingUserCannotBeFound Code = 30013
 	// CodeApikeyError 密钥认证错误或已失效
 	CodeApikeyError Code = 30039
 )
@@ -150,6 +152,27 @@ type UserLogRecord struct {
 	InvoiceIssued int                    `json:"InvoiceIssued"`
 	Data          map[string]interface{} `json:"Data"`
 	Region        string                 `json:"Region"`
+}
+
+// 发布优惠券给下级用户
+type PublishCouponsToLowerLevelUsersRequest struct {
+	BaseLimit      int    `json:"base_limit"`      // 满减条件(满多少才能用)
+	Color          string `json:"color"`           // 颜色: waring: 黄，danger: 红，success: 绿...
+	Count          int    `json:"count"`           // 发放数量
+	ExpDate        int    `json:"exp_date"`        // 过期时间(timestamp)
+	FriendlyName   string `json:"friendly_name"`   // 优惠券标题
+	Type           string `json:"type"`            // 类型: discount:折扣, normal: 直减
+	UID            int    `json:"uid"`             // 要发放到用户ID(如:114514),为空时则返回兑换码
+	UsableDuration string `json:"usable_duration"` // unknown
+	UsableProduct  string `json:"usable_product"`  // 可用产品(默认全部),","分隔: renew,create,upgrade
+	UsableScenes   string `json:"usable_scenes"`   // 适用操作(默认全部),","分隔: rvh,rcs,rgs,ros,rbm
+	Value          int    `json:"value"`           // 直减(元)/折扣(折), 折扣时:1~9:一~九折；11~99:一一~九九折
+}
+
+// 发布优惠券给下级用户响应
+type PublishCouponsToLowerLevelUsersResponse struct {
+	Code int      `json:"code"`
+	Data []string `json:"data"`
 }
 
 const (
