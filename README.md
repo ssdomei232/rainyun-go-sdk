@@ -10,7 +10,7 @@
 使用`rainyun-go-sdk`来顺畅的接入Rainyun API，物品兑换，个人信息查询...
 
 > [!WARNING]  
-> 本项目由第三方开发,不保证可用性和及时性,api接口的变更我们无法即使获知,PR and Issues are welcome.
+> 本项目由第三方开发,不保证可用性和及时性,api接口的变更我们无法即时获知,PR and Issues are welcome.
 
 ## 使用 🥑
 

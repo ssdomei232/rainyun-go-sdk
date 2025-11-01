@@ -15,11 +15,13 @@ const (
 	CodeApikeyError Code = 30039
 )
 
+// 基础响应
 type BaseResponse struct {
 	Code    Code   `json:"code"`
 	Message string `json:"message"`
 }
 
+// 用户信息
 type UserInfo struct {
 	Code int `json:"code"`
 	Data struct {
@@ -149,3 +151,9 @@ type UserLogRecord struct {
 	Data          map[string]interface{} `json:"Data"`
 	Region        string                 `json:"Region"`
 }
+
+const (
+	TBPass   = "关注成功"
+	BiliPass = "雨云爱你"
+	QQPass   = "我爱雨云"
+)
