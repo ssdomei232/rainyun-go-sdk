@@ -1003,10 +1003,15 @@ type AddNatPortMappingRequest struct {
 	Tag      string `json:"tag"`       // 可选
 }
 
-// Rcs续费
+// RCS续费
 type RcsRenewRequest struct {
 	Duration     int `json:"duration"`       // 续费时长(天)
 	WithCouponID int `json:"with_coupon_id"` // 优惠券ID
+}
+
+// RCS自动续费选项
+type RcsEnableAutoRenewRequest struct {
+	AutoRenewOption bool `json:"auto_renew_option"`
 }
 
 const (

@@ -298,7 +298,7 @@ func (c *Client) GetRcsMonitorData(id int, startDate int, endDate int) (*RcsMoni
 
 // 添加NAT端口映射
 // id: RCS ID
-func (c *Client) AddNatPortMapping(id int, req *AddNatPortMappingRequest) (*BasicOperationResponse, error) {
+func (c *Client) AddRcsNatPortMapping(id int, req *AddNatPortMappingRequest) (*BasicOperationResponse, error) {
 	path := fmt.Sprintf("/product/rcs/%d/nat", id)
 
 	var resp BasicOperationResponse
@@ -310,7 +310,7 @@ func (c *Client) AddNatPortMapping(id int, req *AddNatPortMappingRequest) (*Basi
 // 删除NAT端口映射
 // id: RCS ID
 // natID: NAT规则 ID
-func (c *Client) DeleteNatPortMapping(id int, natID int) (*BasicOperationResponse, error) {
+func (c *Client) DeleteRcsNatPortMapping(id int, natID int) (*BasicOperationResponse, error) {
 	path := fmt.Sprintf("/product/rcs/%d/nat?nat_id=%d", id, natID)
 
 	var resp BasicOperationResponse
@@ -341,10 +341,21 @@ func (c *Client) GetRenewPrice(id int) (*BasicOperationResponse, error) {
 	return &resp, err
 }
 
-// Rcs续费
+// RCS续费
 // id: RCS ID
 func (c *Client) RenewRcs(id int, req RcsRenewRequest) (*BasicOperationResponse, error) {
 	path := fmt.Sprintf("/product/rcs/%d/renew/", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
+
+// RCS自动续费选项
+// id: RCS ID
+func (c *Client) EnableRcsAutoRenew(id int, req RcsEnableAutoRenewRequest) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/renew/option", id)
 
 	var resp BasicOperationResponse
 	err := c.DoRequest("POST", path, req, &resp)
