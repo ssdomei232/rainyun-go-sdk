@@ -44,3 +44,17 @@ client := rain.NewClient("your-real-api-key")
 6. 验证码
 
 目前sdk无法处理验证码,[一键气死搬砖狐](https://api.zzwl.top/rainyun-tasks/)是应该是狐狸给加的白名单
+
+## TODO List
+
+按先后顺序:
+
+[ ] 积分兑换
+[ ] 域名管理
+[ ] rcs管理
+[ ] rca管理
+[ ] ros管理
+[ ] rgs管理
+[ ] 工单管理
+[ ] 裸金属管理
+[ ] 二级面板

@@ -2,7 +2,7 @@ package rainyun_go_sdk
 
 /* =============用户部分============= */
 
-// GetUserInfo 获取用户信息.
+// 获取用户信息.
 func (c *Client) GetUserInfo() (*UserInfo, error) {
 	path := "/user/"
 
@@ -12,7 +12,7 @@ func (c *Client) GetUserInfo() (*UserInfo, error) {
 	return &resp, err
 }
 
-// GetUserRewardPruducts 获取可兑换积分产品列表.
+// 获取可兑换积分产品列表.
 func (c *Client) GetUserRewardPruducts() (*UserRewardProducts, error) {
 	path := "/user/reward/products"
 
@@ -22,7 +22,7 @@ func (c *Client) GetUserRewardPruducts() (*UserRewardProducts, error) {
 	return &resp, err
 }
 
-// GetUserLogs 获取用户日志.
+// 获取用户日志.
 // options: 标准查询参数 可以用 MarshalStandardQueryParameters 获取.
 // log_type: 日志类型: "user/": 账号变动日志, "consume/": 消费记录, "user/expense/unsubscribe": 退订记录.
 func (c *Client) GetUserLogs(options string, log_type string) (*UserLogsResponse, error) {
@@ -37,11 +37,21 @@ func (c *Client) GetUserLogs(options string, log_type string) (*UserLogsResponse
 	return &resp, err
 }
 
-// PublishCouponsToLowerLevelUsers 发布优惠券给下级用户
-func (c *Client) PublishCouponsToLowerLevelUsers(req *PublishCouponsToLowerLevelUsersRequest) (*PublishCouponsToLowerLevelUsersResponse, error) {
+// 发布优惠券给下级用户
+func (c *Client) PublishCouponsToLowerLevelUsers(req *PublishCouponsToLowerLevelUsersRequest) (*BasicOperationResponse, error) {
 	path := "/user/vip/coupon"
 
-	var resp PublishCouponsToLowerLevelUsersResponse
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
+
+// 发布优惠券到积分商城(供下级领取)
+func (c *Client) PostCouponsToPointsMall(req *PostCouponsToPointsMallRequest) (*BasicOperationResponse, error) {
+	path := "/user/vip/coupon"
+
+	var resp BasicOperationResponse
 	err := c.DoRequest("POST", path, req, &resp)
 
 	return &resp, err

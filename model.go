@@ -23,6 +23,11 @@ type BaseResponse struct {
 	Message string `json:"message"`
 }
 
+type BasicOperationResponse struct {
+	Code int      `json:"code"`
+	Data []string `json:"data"`
+}
+
 // 用户信息
 type UserInfo struct {
 	Code int `json:"code"`
@@ -169,10 +174,24 @@ type PublishCouponsToLowerLevelUsersRequest struct {
 	Value          int    `json:"value"`           // 直减(元)/折扣(折), 折扣时:1~9:一~九折；11~99:一一~九九折
 }
 
-// 发布优惠券给下级用户响应
-type PublishCouponsToLowerLevelUsersResponse struct {
-	Code int      `json:"code"`
-	Data []string `json:"data"`
+// 发送优惠券到积分商城
+type PostCouponsToPointsMallRequest struct {
+	AvailableDays  int    `json:"available_days"`  // 可用天数
+	BaseLimit      int    `json:"base_limit"`      // 满减条件(满多少才能用)
+	BuyLimit       int    `json:"buy_limit"`       // 领取次数限制
+	Color          string `json:"color"`           // 颜色: waring: 黄, danger: 红, success: 绿, info: 蓝
+	Count          int    `json:"count"`           // 发放数量
+	EndDate        int    `json:"end_date"`        // 截止日期
+	FirstSend      bool   `json:"first_send"`      // 绑定微信后立即自动领取(设置后不可手动领取并且不会显示)
+	FriendlyName   string `json:"friendly_name"`   // 优惠券名称
+	Name           string `json:"name"`            // 标识名称
+	Order          int    `json:"order"`           // 排序,越大越靠前
+	Points         int    `json:"points"`          // 领取积分
+	Type           string `json:"type"`            // 类型: discount:折扣, normal: 直减
+	UsableDuration string `json:"usable_duration"` // unknown
+	UsableProduct  string `json:"usable_product"`  // 可用产品(默认全部),","分隔: renew,create,upgrade
+	UsableScenes   string `json:"usable_scenes"`   // 适用操作(默认全部),","分隔: rvh,rcs,rgs,ros,rbm
+	Value          int    `json:"value"`           // 直减(元)/折扣(折), 折扣时:1~9:一~九折；11~99:一一~九九折
 }
 
 const (
