@@ -44,6 +44,7 @@ func (c *Client) DoRequest(method, endpoint string, reqData any, respData any) e
 
 	resp, err := req.Execute(method, endpoint)
 
+	// 错误处理
 	if resp.StatusCode() == 200 {
 		return err
 	} else if resp.StatusCode() == 403 {

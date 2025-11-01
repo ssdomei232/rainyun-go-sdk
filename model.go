@@ -100,6 +100,7 @@ type UserInfo struct {
 	} `json:"data"`
 }
 
+// UserRewardProducts 用户可用积分兑换的产品
 type UserRewardProducts struct {
 	Code int `json:"code"`
 	Data struct {
@@ -109,4 +110,38 @@ type UserRewardProducts struct {
 		Ros []interface{} `json:"ros"`
 		Rbm []interface{} `json:"rbm"`
 	} `json:"data"`
+}
+
+// UserLogsResponse 用户日志响应结构体
+type UserLogsResponse struct {
+	Code int          `json:"code"`
+	Data UserLogsData `json:"data"`
+}
+
+// UserLogsData 用户日志数据
+type UserLogsData struct {
+	TotalRecords int             `json:"TotalRecords"`
+	Records      []UserLogRecord `json:"Records"`
+}
+
+// UserLogRecord 单条用户日志记录
+type UserLogRecord struct {
+	ID            int                    `json:"ID"`
+	UID           int                    `json:"UID"`
+	StartTime     int                    `json:"StartTime"`
+	EndTime       int                    `json:"EndTime"`
+	Type          string                 `json:"Type"`
+	Duration      string                 `json:"Duration"`
+	ProductID     int                    `json:"ProductID"`
+	PlanID        int                    `json:"PlanID"`
+	Price         float64                `json:"Price"`
+	FromPoint     int                    `json:"FromPoint"`
+	CutPrice      int                    `json:"CutPrice"`
+	StockPrice    float64                `json:"StockPrice"`
+	AgentID       int                    `json:"AgentID"`
+	Valid         bool                   `json:"Valid"`
+	Discard       bool                   `json:"Discard"`
+	InvoiceIssued int                    `json:"InvoiceIssued"`
+	Data          map[string]interface{} `json:"Data"`
+	Region        string                 `json:"Region"`
 }

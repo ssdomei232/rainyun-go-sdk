@@ -1,5 +1,7 @@
 package rainyun_go_sdk
 
+/* =============用户信息部分============= */
+
 // GetUserInfo 获取用户信息
 func (c *Client) GetUserInfo() (*UserInfo, error) {
 	uri := "/user/"
@@ -16,6 +18,21 @@ func (c *Client) GetUserRewardPruducts() (*UserRewardProducts, error) {
 
 	var resp UserRewardProducts
 	err := c.DoRequest("GET", uri, nil, &resp)
+
+	return &resp, err
+}
+
+// GetUserLogs 获取用户日志
+// options: 标准查询参数 可以用 MarshalStandardQueryParameters 获取
+// log_type: 日志类型 "user/": 账号变动日志 "consume/": 消费记录 "user/expense/unsubscribe": 退订记录
+func (c *Client) GetUserLogs(options string, log_type string) (*UserLogsResponse, error) {
+	uri := "/user/logs"
+
+	var resp UserLogsResponse
+	err := c.DoRequest("GET", uri, map[string]string{
+		"options":  options,
+		"log_type": log_type,
+	}, &resp)
 
 	return &resp, err
 }
