@@ -19,8 +19,14 @@ const (
 	CodeApikeyError Code = 30039
 	// CodeRequiresSecondaryVerification 需要二次验证
 	CodeRequiresSecondaryVerification Code = 30043
+	// CodePortIsAlreadyInUse 端口已被使用
+	CodePortIsAlreadyInUse Code = 70020
+	// CodeProductHasExpired 产品已过期
+	CodeProductHasExpired Code = 70021
 	// CodeTheCurrentStateOfTheProductCannotPerformThisOperation 产品当前状态无法执行此操作
 	CodeTheCurrentStateOfTheProductCannotPerformThisOperation Code = 70026
+	// CodeAgreementRequired 需提供协议
+	CodeAgreementRequired Code = 70057
 )
 
 // 基础响应
@@ -907,7 +913,100 @@ type CreateAndBindElasticIpToRcsRequest struct {
 
 // 更换IP
 type ChangeIPRequest struct {
-	IP string `json:"ip"` // IP地址
+	DisableOldIPReason string `json:"disable_old_ip_reason"` // 可选
+	IP                 string `json:"ip"`                    // IP地址
+	ToIP               string `json:"to_ip"`                 // 可选
+}
+
+// 放弃IP
+type DisCardIPRequest struct {
+	IP string `json:"ip"`
+}
+
+// 防火墙规则列表
+type FirewallRuleList struct {
+	Code int `json:"code"`
+	Data struct {
+		TotalRecords int `json:"TotalRecords"`
+		Records      []struct {
+			ID            int    `json:"ID"`
+			VID           int    `json:"v_id"`
+			IsEnable      bool   `json:"is_enable"`
+			Pos           int    `json:"pos"`
+			SourceAddress string `json:"source_address"`
+			DestPort      string `json:"dest_port"`
+			SourcePort    string `json:"source_port"`
+			Protocol      string `json:"protocol"`
+			Action        string `json:"action"`
+			Description   string `json:"description"`
+		} `json:"Records"`
+	} `json:"data"`
+}
+
+// 创建/设置防火墙规则
+type SetFirewallRuleRequest struct {
+	Action        string `json:"action"`         // 动作，accept/drop，接受或者丢弃
+	Description   string `json:"description"`    // 备注(可选)
+	DestPort      string `json:"dest_port"`      // 代表本机的目的端口，可以用-来链接，空白代表所有端口(可选)
+	ID            int    `json:"id"`             // 规则ID(可选)
+	IsEnable      bool   `json:"is_enable"`      //是否启用该规则(可选)
+	Protocol      string `json:"protocol"`       // 协议，udp/tcp/icmp，空白代表所有(可选)
+	SourceAddress string `json:"source_address"` // 代表来源的地址，可以用-链接范围，或者用逗号来分割多个地址，可以使用网络，CIDR格式，空则代表所有地址(可选)
+	SourcePort    string `json:"source_port"`    // 一般不填(防反射)(可选)
+}
+
+// 移动防火墙规则优先级
+type MobileFirewallRulePriorityRequest struct {
+	NewPos int `json:"newPos"`
+}
+
+// RCS监控数据
+/* 格式如下:
+{
+    "code": 200,
+    "data": {
+        "Columns": [
+            "time",
+            "cpu",
+            "freemem",
+            "diskwrite",
+            "diskread",
+            "netout",
+            "netin"
+        ],
+        "Values": [
+            [
+                1762004960,
+                0.0310156592414152,
+                null,
+                39321.6,
+                0,
+                4297.5,
+                5647.1
+            ]
+		}
+}
+*/
+type RcsMonitoringData struct {
+	Code int `json:"code"`
+	Data struct {
+		Columns []string    `json:"Columns"`
+		Values  [][]float64 `json:"Values"`
+	} `json:"data"`
+}
+
+// 添加NAT端口映射
+type AddNatPortMappingRequest struct {
+	PortIn   int    `json:"port_in"`   // >= 1 <= 65535
+	PortOut  int    `json:"port_out"`  // >= 10000 <= 60000
+	PortType string `json:"port_type"` // tcp/udp/tcp_udp
+	Tag      string `json:"tag"`       // 可选
+}
+
+// Rcs续费
+type RcsRenewRequest struct {
+	Duration     int `json:"duration"`       // 续费时长(天)
+	WithCouponID int `json:"with_coupon_id"` // 优惠券ID
 }
 
 const (

@@ -66,7 +66,7 @@ func (c *Client) RedeemPointsForItem(id int) (*BasicOperationResponse, error) {
 
 /* ==============RCS============== */
 
-// 设置IP描述
+// 设置RCS IP描述
 // id: RCS ID, ip: ip address, desc: description
 func (c *Client) SetRcsEipDescription(id int, ip string, desc string) (*BasicOperationResponse, error) {
 	path := "/product/rcs/{id}/eip/description"
@@ -209,6 +209,142 @@ func (c *Client) CreateAndBindElasticIpToRcs(id int, req *CreateAndBindElasticIp
 // id: RCS ID
 func (c *Client) ChangeIP(id int, req *ChangeIPRequest) (*BasicOperationResponse, error) {
 	path := fmt.Sprintf("/product/rcs/%d/eip/change", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
+
+// 放弃IP
+// id: RCS ID
+func (c *Client) DisCardIP(id int, req DisCardIPRequest) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/eip/discard", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
+
+// 获取RCS防火墙规则列表
+// id: RCS ID
+// options: RCS查询参数 可以用 MarshalRCSQueryParameters 获取.
+func (c *Client) GetFirewallRules(id int, options string) (*FirewallRuleList, error) {
+	path := fmt.Sprintf("/product/rcs/%d/firewall/rule", id)
+
+	var resp FirewallRuleList
+	err := c.DoRequest("GET", path, options, &resp)
+
+	return &resp, err
+}
+
+// 创建/设置RCS防火墙规则
+// id: RCS ID
+func (c *Client) SetFirewallRule(id int, req *SetFirewallRuleRequest) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/firewall/rule", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
+
+// 删除RCS防火墙规则
+// id: RCS ID
+func (c *Client) DeleteFirewallRule(id int, ruleID int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/firewall/rule/%d", id, ruleID)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("DELETE", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 移动RCS防火墙规则优先级
+// id: RCS ID
+func (c *Client) MobileFirewallRulePriority(id int, req MobileFirewallRulePriorityRequest) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%dfirewall/rule/{ruleId}/pos", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("PUT", path, req, &resp)
+
+	return &resp, err
+}
+
+// 释放RCS
+// id: RCS ID
+func (c *Client) FreeRcs(id int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/free", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 获取RCS监控数据
+// id: RCS ID
+// startDate: 开始时间
+// endDate: 结束时间
+func (c *Client) GetRcsMonitorData(id int, startDate int, endDate int) (*RcsMonitoringData, error) {
+	path := fmt.Sprintf("/product/rcs/%d/monitor?start_date=%d&end_date=%d", id, startDate, endDate)
+
+	var resp RcsMonitoringData
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 添加NAT端口映射
+// id: RCS ID
+func (c *Client) AddNatPortMapping(id int, req *AddNatPortMappingRequest) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/nat", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
+
+// 删除NAT端口映射
+// id: RCS ID
+// natID: NAT规则 ID
+func (c *Client) DeleteNatPortMapping(id int, natID int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/nat?nat_id=%d", id, natID)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("DELETE", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 云服务器重启操作
+// id: RCS ID
+func (c *Client) RebootRcs(id int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/reboot", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 获取续费价格
+// id: RCS ID
+func (c *Client) GetRenewPrice(id int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/renew/", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// Rcs续费
+// id: RCS ID
+func (c *Client) RenewRcs(id int, req RcsRenewRequest) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/renew/", id)
 
 	var resp BasicOperationResponse
 	err := c.DoRequest("POST", path, req, &resp)
