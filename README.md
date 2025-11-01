@@ -45,6 +45,10 @@ client := rain.NewClient("your-real-api-key")
 
 目前sdk无法处理验证码,[一键气死搬砖狐](https://api.zzwl.top/rainyun-tasks/)是应该是狐狸给加的白名单
 
+7. 二次验证
+
+二次验证的逻辑应该是只要进行了二次验证，那么一段时间内所有的需要二次验证的操作都是可以直接进行的
+
 ## TODO List
 
 按先后顺序:

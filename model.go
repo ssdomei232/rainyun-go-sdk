@@ -276,6 +276,16 @@ type PointsMallItemsResponse struct {
 	} `json:"data"`
 }
 
+// 请求二次验证
+type Request2FARequest struct {
+	Type string `json:"type"`
+}
+
+// 验证二次验证结果
+type Verify2FAResultRequest struct {
+	AuthCode int `json:"auth_code"`
+}
+
 // 设置IP描述
 type SetRcsEipDescriptionRequest struct {
 	IP          string `json:"ip"`
@@ -905,26 +915,26 @@ type RcsManagesElasticCloudDisksCreate struct {
 }
 
 // 创建并绑定弹性IP到RCS
-type CreateAndBindElasticIpToRcsRequest struct {
+type CreateAndBindIpToRcsRequest struct {
 	WithFlags  string `json:"with_flags"`   // IP特征(可选): 应该是高防: us_ddosip -> 美国高防，nb_ddosip -> 宁波高防
 	WithIPNum  int    `json:"with_ip_num"`  // IP数量
 	WithIPType string `json:"with_ip_type"` // ipv4/ipv6
 }
 
 // 更换IP
-type ChangeIPRequest struct {
+type ChangeRcsIPRequest struct {
 	DisableOldIPReason string `json:"disable_old_ip_reason"` // 可选
 	IP                 string `json:"ip"`                    // IP地址
 	ToIP               string `json:"to_ip"`                 // 可选
 }
 
 // 放弃IP
-type DisCardIPRequest struct {
+type DisCardRcsIPRequest struct {
 	IP string `json:"ip"`
 }
 
 // 防火墙规则列表
-type FirewallRuleList struct {
+type RcsFirewallRuleList struct {
 	Code int `json:"code"`
 	Data struct {
 		TotalRecords int `json:"TotalRecords"`
@@ -944,7 +954,7 @@ type FirewallRuleList struct {
 }
 
 // 创建/设置防火墙规则
-type SetFirewallRuleRequest struct {
+type SetRcsFirewallRuleRequest struct {
 	Action        string `json:"action"`         // 动作，accept/drop，接受或者丢弃
 	Description   string `json:"description"`    // 备注(可选)
 	DestPort      string `json:"dest_port"`      // 代表本机的目的端口，可以用-来链接，空白代表所有端口(可选)
@@ -956,7 +966,7 @@ type SetFirewallRuleRequest struct {
 }
 
 // 移动防火墙规则优先级
-type MobileFirewallRulePriorityRequest struct {
+type MobileRcsFirewallRulePriorityRequest struct {
 	NewPos int `json:"newPos"`
 }
 
@@ -996,7 +1006,7 @@ type RcsMonitoringData struct {
 }
 
 // 添加NAT端口映射
-type AddNatPortMappingRequest struct {
+type AddRcsNatPortMappingRequest struct {
 	PortIn   int    `json:"port_in"`   // >= 1 <= 65535
 	PortOut  int    `json:"port_out"`  // >= 10000 <= 60000
 	PortType string `json:"port_type"` // tcp/udp/tcp_udp
@@ -1004,13 +1014,13 @@ type AddNatPortMappingRequest struct {
 }
 
 // RCS续费
-type RcsRenewRequest struct {
+type RenewRcsRequest struct {
 	Duration     int `json:"duration"`       // 续费时长(天)
 	WithCouponID int `json:"with_coupon_id"` // 优惠券ID
 }
 
 // RCS自动续费选项
-type RcsEnableAutoRenewRequest struct {
+type EnableRcsAutoRenewRequest struct {
 	AutoRenewOption bool `json:"auto_renew_option"`
 }
 
