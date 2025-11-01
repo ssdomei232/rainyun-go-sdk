@@ -1,6 +1,7 @@
 package rainyun_go_sdk
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/go-resty/resty/v2"
@@ -9,6 +10,11 @@ import (
 type Client struct {
 	apikey string
 	client *resty.Client
+}
+
+type Error struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
 }
 
 func NewClient(apiKey string) *Client {
@@ -24,35 +30,8 @@ func NewClient(apiKey string) *Client {
 	}
 }
 
-func (c *Client) Get(endpoint string, params map[string]interface{}) (*resty.Response, error) {
-	stringParams := make(map[string]string)
-	for k, v := range params {
-		stringParams[k] = fmt.Sprintf("%v", v)
-	}
-
-	return c.client.R().
-		SetQueryParams(stringParams).
-		Get(endpoint)
-}
-
-func (c *Client) Post(endpoint string, data interface{}) (*resty.Response, error) {
-	return c.client.R().
-		SetBody(data).
-		Post(endpoint)
-}
-
-func (c *Client) Put(endpoint string, data interface{}) (*resty.Response, error) {
-	return c.client.R().
-		SetBody(data).
-		Put(endpoint)
-}
-
-func (c *Client) Delete(endpoint string) (*resty.Response, error) {
-	return c.client.R().
-		Delete(endpoint)
-}
-
-func (c *Client) DoRequest(method, endpoint string, reqData interface{}, respData interface{}) error {
+// DoRequest 发起一次http请求
+func (c *Client) DoRequest(method, endpoint string, reqData any, respData any) error {
 	req := c.client.R()
 
 	if reqData != nil {
@@ -63,6 +42,29 @@ func (c *Client) DoRequest(method, endpoint string, reqData interface{}, respDat
 		req.SetResult(respData)
 	}
 
-	_, err := req.Execute(method, endpoint)
-	return err
+	resp, err := req.Execute(method, endpoint)
+
+	if resp.StatusCode() == 200 {
+		return err
+	} else if resp.StatusCode() == 403 {
+		var baseResp BaseResponse
+		json.Unmarshal(resp.Body(), &baseResp)
+
+		if baseResp.Code == CodeApikeyError {
+			return fmt.Errorf("apikey error")
+		}
+
+		return fmt.Errorf("unknown error")
+	} else if resp.StatusCode() == 400 {
+		var baseResp BaseResponse
+		json.Unmarshal(resp.Body(), &baseResp)
+
+		if baseResp.Code == CodeInvalidInputParameter {
+			return fmt.Errorf("invalid input parameter")
+		}
+
+		return fmt.Errorf("unknown error")
+	} else {
+		return fmt.Errorf("unknown error")
+	}
 }

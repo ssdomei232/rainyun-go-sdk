@@ -1,5 +1,21 @@
 package rainyun_go_sdk
 
+type Code int
+
+const (
+	// CodeSuccess 成功
+	CodeSuccess Code = 200
+	// 密钥认证错误或已失效
+	CodeApikeyError Code = 30039
+	// CodeInvalidInputParameter 输入参数无效
+	CodeInvalidInputParameter Code = 10002
+)
+
+type BaseResponse struct {
+	Code    Code   `json:"code"`
+	Message string `json:"message"`
+}
+
 type UserInfo struct {
 	Code int `json:"code"`
 	Data struct {

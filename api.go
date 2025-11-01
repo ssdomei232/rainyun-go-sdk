@@ -10,6 +10,7 @@ func (c *Client) GetUserInfo() (*UserInfo, error) {
 	return &resp, err
 }
 
+// GetUserRewardPruducts 获取可兑换积分产品列表
 func (c *Client) GetUserRewardPruducts() (*UserRewardProducts, error) {
 	uri := "/user/reward/products"
 
