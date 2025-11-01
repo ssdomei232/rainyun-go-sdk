@@ -56,3 +56,5 @@ func (c *Client) PostCouponsToPointsMall(req *PostCouponsToPointsMallRequest) (*
 
 	return &resp, err
 }
+
+/* ==============域名============== */
