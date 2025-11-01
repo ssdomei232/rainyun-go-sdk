@@ -15,7 +15,7 @@ type StandardQueryParametersSort struct {
 	Type  string `json:"type"`
 }
 
-// 获取标准查询参数,sort为可选参数,不需要排序就直接传nil
+// 编码标准查询参数,sort为可选参数,不需要排序就直接传nil
 // sort 示例: [{"field":"Time","type":"asc"}]
 func MarshalStandardQueryParameters(id int, sort []StandardQueryParametersSort, page int, perPage int, start int, end int) string {
 	if sort == nil {

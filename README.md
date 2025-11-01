@@ -2,6 +2,7 @@
 
 ## 简介 📜
 
+![GoReport](https://goreportcard.com/badge/github.com/ssdomei232/rainyun-go-sdk)
 ![GitHub go.mod Go version (subdirectory of monorepo)](https://img.shields.io/github/go-mod/go-version/ssdomei232/rainyun-go-sdk) 
 ![GitHub](https://img.shields.io/github/license/ssdomei232/rainyun-go-sdk) 
 ![GitHub tag (with filter)](https://img.shields.io/github/v/tag/ssdomei232/rainyun-go-sdk)
