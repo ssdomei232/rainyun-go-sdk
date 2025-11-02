@@ -700,6 +700,7 @@ func (c *Client) GetRcaRaindropPlansList() (*RaindropPlansList, error) {
 }
 
 // 云应用获取雨点消费历史
+//
 // options: 查询参数 可以用 MarshalStandQueryParameters 获取.
 func (c *Client) GetRaindropConsumeLog(options string) (*RaindropConsumeLog, error) {
 	path := fmt.Sprintf("/product/rca/raindrop/consume_log?options=%s", options)
@@ -732,6 +733,50 @@ func (c *Client) ActivateRca(regionID int) (*BasicOperationResponse, error) {
 
 	var resp BasicOperationResponse
 	err := c.DoRequest("POST", path, ActivateRcaRequest{RegionID: regionID}, &resp)
+
+	return &resp, err
+}
+
+// 云应用获取雨点余额
+func (c *Client) GetRcaRaindropBalance() (*RaindropBalance, error) {
+	path := "/product/rca/raindrop"
+
+	var resp RaindropBalance
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 创建云应用项目
+func (c *Client) CreateRcaProject(req *CreateRcaProjectRequest) (*CreateRcaProjectResponse, error) {
+	path := "/product/rca/project/"
+
+	var resp CreateRcaProjectResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
+
+// 云应用列出项目
+//
+// options: 查询参数 可以用 MarshalStandQueryParameters 获取.
+func (c *Client) ListRcaProjects(options string) (*RcaProjectList, error) {
+	path := fmt.Sprintf("/product/rca/project/?no_metrics=false&options=%s", options) // no_metrics 含义不明
+
+	var resp RcaProjectList
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 销毁云应用项目
+//
+// id: RCA项目ID
+func (c *Client) DestroyRcaProject(id int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rca/project/%d/", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("DELETE", path, nil, &resp)
 
 	return &resp, err
 }

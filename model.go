@@ -1349,6 +1349,192 @@ type ActivateRcaRequest struct {
 	RegionID int `json:"region_id"`
 }
 
+// 雨点余额
+type RaindropBalance struct {
+	Code int     `json:"code"`
+	Data float64 `json:"data"`
+}
+
+// 创建云应用项目请求
+type CreateRcaProjectRequest struct {
+	ChargeType  string `json:"charge_type"`  // 计费类型: 动态计费: elastic
+	CPULimit    int    `json:"cpu_limit"`    //（仅限package模式）CPU限制（毫核），1核心=1000，0.1核=100
+	DiskSize    int    `json:"disk_size"`    // 磁盘大小（GiB）
+	Ipv4Count   int    `json:"ipv4_count"`   // 要添加的IPv4地址数量
+	Ipv6Count   int    `json:"ipv6_count"`   // 要添加的IPv6地址数量
+	MemoryLimit int    `json:"memory_limit"` // （仅限package模式）内存限制（MiB）
+	Name        string `json:"name"`         // 名称
+
+	RegionID int `json:"region_id"` // 部署区域
+}
+
+// 创建云应用项目响应
+type CreateRcaProjectResponse struct {
+	Code int `json:"code"`
+	Data struct {
+		ID         int    `json:"ID"`
+		UID        int    `json:"UID"`
+		PlanID     int    `json:"PlanID"`
+		CreateDate int    `json:"CreateDate"`
+		NodeUUID   string `json:"NodeUUID"`
+		Node       struct {
+			UUID              string `json:"UUID"`
+			AuthKey           string `json:"AuthKey"`
+			Region            string `json:"Region"`
+			IPRegion          string `json:"IpRegion"`
+			Machine           string `json:"Machine"`
+			Product           string `json:"Product"`
+			Subtype           string `json:"Subtype"`
+			ChineseName       string `json:"ChineseName"`
+			PhysicalNode      string `json:"PhysicalNode"`
+			Config            string `json:"Config"`
+			Stock             any    `json:"Stock"`
+			StatusData        string `json:"StatusData"`
+			ShowMonitorData   string `json:"ShowMonitorData"`
+			UpdateTime        string `json:"UpdateTime"`
+			GitRepositoryName string `json:"GitRepositoryName"`
+			CertifyRequired   bool   `json:"CertifyRequired"`
+			IsDisableBackup   bool   `json:"IsDisableBackup"`
+			IsHidden          bool   `json:"IsHidden"`
+			NodeName          string `json:"NodeName"`
+		} `json:"Node"`
+		Status                  string      `json:"Status"`
+		StopReason              string      `json:"StopReason"`
+		RewardPointsToBeCollect int         `json:"RewardPointsToBeCollect"`
+		Tag                     string      `json:"Tag"`
+		ExpDate                 int         `json:"ExpDate"`
+		ExpireNotice            int         `json:"ExpireNotice"`
+		AutoRenew               bool        `json:"AutoRenew"`
+		UnsubscribeAble         bool        `json:"UnsubscribeAble"`
+		Try                     bool        `json:"Try"`
+		Name                    string      `json:"name"`
+		RegionID                int         `json:"region_id"`
+		Region                  interface{} `json:"region"`
+		Namespace               string      `json:"namespace"`
+		APIToken                string      `json:"APIToken"`
+		ResourceLimits          struct {
+			MaxCPU    int `json:"max_cpu"`
+			MaxMemory int `json:"max_memory"`
+		} `json:"resource_limits"`
+		VolumeSize     int    `json:"volume_size"`
+		ChargeType     string `json:"charge_type"`
+		HourlyPrice    int    `json:"hourly_price"`
+		NextChargeTime int    `json:"next_charge_time"`
+		BackupTarget   struct {
+			Type              string `json:"type"`
+			S3Endpoint        string `json:"s3_endpoint"`
+			S3Bucket          string `json:"s3_bucket"`
+			S3AccessKey       string `json:"s3_access_key"`
+			S3SecretKey       string `json:"s3_secret_key"`
+			S3BackupDirectory string `json:"s3_backup_directory"`
+		} `json:"backup_target"`
+		SftpSetting   any  `json:"sftp_setting"`
+		IdleAlarmFlag bool `json:"idle_alarm_flag"`
+		PaymentDueEnd int  `json:"payment_due_end"`
+	} `json:"data"`
+}
+
+// 云应用项目列表
+type RcaProjectList struct {
+	Code int `json:"code"`
+	Data struct {
+		TotalRecords int `json:"TotalRecords"`
+		Records      []struct {
+			ID         int    `json:"ID"`
+			UID        int    `json:"UID"`
+			PlanID     int    `json:"PlanID"`
+			CreateDate int    `json:"CreateDate"`
+			NodeUUID   string `json:"NodeUUID"`
+			Node       struct {
+				UUID              string      `json:"UUID"`
+				AuthKey           string      `json:"AuthKey"`
+				Region            string      `json:"Region"`
+				IPRegion          string      `json:"IpRegion"`
+				Machine           string      `json:"Machine"`
+				Product           string      `json:"Product"`
+				Subtype           string      `json:"Subtype"`
+				ChineseName       string      `json:"ChineseName"`
+				PhysicalNode      string      `json:"PhysicalNode"`
+				Config            string      `json:"Config"`
+				Stock             interface{} `json:"Stock"`
+				StatusData        string      `json:"StatusData"`
+				ShowMonitorData   string      `json:"ShowMonitorData"`
+				UpdateTime        string      `json:"UpdateTime"`
+				GitRepositoryName string      `json:"GitRepositoryName"`
+				CertifyRequired   bool        `json:"CertifyRequired"`
+				IsDisableBackup   bool        `json:"IsDisableBackup"`
+				IsHidden          bool        `json:"IsHidden"`
+				NodeName          string      `json:"NodeName"`
+			} `json:"Node"`
+			Status                  string `json:"Status"`
+			StopReason              string `json:"StopReason"`
+			RewardPointsToBeCollect int    `json:"RewardPointsToBeCollect"`
+			Tag                     string `json:"Tag"`
+			ExpDate                 int    `json:"ExpDate"`
+			ExpireNotice            int    `json:"ExpireNotice"`
+			AutoRenew               bool   `json:"AutoRenew"`
+			UnsubscribeAble         bool   `json:"UnsubscribeAble"`
+			Try                     bool   `json:"Try"`
+			Name                    string `json:"name"`
+			RegionID                int    `json:"region_id"`
+			Region                  struct {
+				ID                   int    `json:"id"`
+				Name                 string `json:"name"`
+				ChineseName          string `json:"chinese_name"`
+				WebsiteServiceDomain string `json:"website_service_domain"`
+				SftpServiceDomain    string `json:"sftp_service_domain"`
+				PublicServiceDomain  string `json:"public_service_domain"`
+				PriceInfo            struct {
+					CPU     float64 `json:"cpu"`
+					Memory  float64 `json:"memory"`
+					Ipv4    float64 `json:"ipv4"`
+					Traffic float64 `json:"traffic"`
+					Disk    float64 `json:"disk"`
+				} `json:"price_info"`
+			} `json:"region"`
+			Namespace      string `json:"namespace"`
+			APIToken       string `json:"APIToken"`
+			ResourceLimits struct {
+				MaxCPU    int `json:"max_cpu"`
+				MaxMemory int `json:"max_memory"`
+			} `json:"resource_limits"`
+			UsageData struct {
+				CPU             int    `json:"cpu"`
+				Memory          int    `json:"memory"`
+				NetOut          int    `json:"net_out"`
+				NetIn           int    `json:"net_in"`
+				DiskUsage       int    `json:"disk_usage"`
+				TrafficToday    int    `json:"traffic_today"`
+				Status          string `json:"status"`
+				StatusReason    string `json:"status_reason"`
+				AllocatedCPU    int    `json:"allocated_cpu"`
+				AllocatedMemory int    `json:"allocated_memory"`
+				AppCount        int    `json:"app_count"`
+				WebsiteCount    int    `json:"website_count"`
+				DatabaseCount   int    `json:"database_count"`
+				Ipv4Count       int    `json:"ipv4_count"`
+				HealthyPods     int    `json:"healthy_pods"`
+				UnhealthyPods   int    `json:"unhealthy_pods"`
+			} `json:"usage_data"`
+			VolumeSize     int    `json:"volume_size"`
+			ChargeType     string `json:"charge_type"`
+			HourlyPrice    int    `json:"hourly_price"`
+			NextChargeTime int    `json:"next_charge_time"`
+			BackupTarget   struct {
+				Type              string `json:"type"`
+				S3Endpoint        string `json:"s3_endpoint"`
+				S3Bucket          string `json:"s3_bucket"`
+				S3AccessKey       string `json:"s3_access_key"`
+				S3SecretKey       string `json:"s3_secret_key"`
+				S3BackupDirectory string `json:"s3_backup_directory"`
+			} `json:"backup_target"`
+			SftpSetting   interface{} `json:"sftp_setting"`
+			IdleAlarmFlag bool        `json:"idle_alarm_flag"`
+			PaymentDueEnd int         `json:"payment_due_end"`
+		} `json:"Records"`
+	} `json:"data"`
+}
+
 const (
 	TBPass   = "关注成功"
 	BiliPass = "雨云爱你"
