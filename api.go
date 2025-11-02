@@ -710,11 +710,28 @@ func (c *Client) GetRaindropConsumeLog(options string) (*RaindropConsumeLog, err
 	return &resp, err
 }
 
+// 云应用购买雨点
+//
+// planID: 雨点套餐ID
+//
+// couponID: 优惠券ID
 func (c *Client) BuyRaindrop(planID int, couponID int) (*BasicOperationResponse, error) {
 	path := "/product/rca/raindrop"
 
 	var resp BasicOperationResponse
 	err := c.DoRequest("POST", path, BuyRaindropRequest{PlanID: planID, WithCouponID: couponID}, &resp)
+
+	return &resp, err
+}
+
+// 开通云应用产品
+//
+// regionID: 地域ID
+func (c *Client) ActivateRca(regionID int) (*BasicOperationResponse, error) {
+	path := "/product/rca/activate"
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, ActivateRcaRequest{RegionID: regionID}, &resp)
 
 	return &resp, err
 }

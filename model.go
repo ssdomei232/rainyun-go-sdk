@@ -38,8 +38,8 @@ type BaseResponse struct {
 }
 
 type BasicOperationResponse struct {
-	Code int      `json:"code"`
-	Data []string `json:"data"`
+	Code int    `json:"code"`
+	Data string `json:"data"`
 }
 
 // 用户信息
@@ -1342,6 +1342,11 @@ type RaindropConsumeLog struct {
 type BuyRaindropRequest struct {
 	PlanID       int `json:"plan_id"`
 	WithCouponID int `json:"with_coupon_id"`
+}
+
+// 开通云应用产品请求
+type ActivateRcaRequest struct {
+	RegionID int `json:"region_id"`
 }
 
 const (
