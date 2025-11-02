@@ -54,7 +54,7 @@ client := rain.NewClient("your-real-api-key")
 按先后顺序:
 
 - [x] 积分兑换  
-- [ ] rcs管理(working)  
+- [x] rcs管理  
 - [ ] rca管理  
 - [ ] ros管理  
 - [ ] rgs管理  
