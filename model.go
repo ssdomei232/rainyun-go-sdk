@@ -1272,6 +1272,78 @@ type SetWorkorderStatusRequest struct {
 	Status string `json:"status"`
 }
 
+// 云应用区域信息
+type RcaRegionInfo struct {
+	Code int `json:"code"`
+	Data []struct {
+		Id                     int    `json:"id"`
+		Name                   string `json:"name"`
+		Chinese_name           string `json:"chinese_name"`
+		Website_service_domain string `json:"website_service_domain"`
+		SftpServiceDomain      string `json:"sftp_service_domain"`
+		PublicServiceDomain    string `json:"public_service_domain"`
+		PriceInfo              struct {
+			Cpu     float64 `json:"cpu"`
+			Memory  float64 `json:"memory"`
+			Ipv4    float64 `json:"ipv4"`
+			Traffic float64 `json:"traffic"`
+			Disk    float64 `json:"disk"`
+		} `json:"price_info"`
+	} `json:"data"`
+}
+
+// 云应用雨点余额使用情况
+type RcaRaindropUsage struct {
+	Code int `json:"code"`
+	Data struct {
+		ExpectedRemainDays     int     `json:"expected_remain_days"`      // 预计剩余天数
+		LastMonthUsage         float64 `json:"last_month_usage"`          // 上月使用量
+		ExpectedNextMonthUsage float64 `json:"expected_next_month_usage"` // 预计下月使用量
+		FreeTrialRemainDays    int     `json:"free_trial_remain_days"`    // 剩余免费试用天数
+		IsBeforeFirstPayment   bool    `json:"is_before_first_payment"`
+	} `json:"data"`
+}
+
+// 雨点套餐列表
+type RaindropPlansList struct {
+	Code int `json:"code"`
+	Data []struct {
+		Id        int    `json:"id"`
+		Amount    int    `json:"amount"`
+		Price     int    `json:"price"`
+		IsSelling bool   `json:"is_selling"`
+		PlanName  string `json:"plan_name"`
+		Chinese   string `json:"chinese"`
+	} `json:"data"`
+}
+
+// 雨点消费历史
+type RaindropConsumeLog struct {
+	Code int `json:"code"`
+	Data struct {
+		TotalRecords int `json:"TotalRecords"`
+		Records      []struct {
+			Id        int     `json:"id"`
+			Uid       int     `json:"uid"`
+			Time      int     `json:"time"`
+			Type      string  `json:"type"`
+			ProductID int     `json:"product_id"`
+			Amount    float64 `json:"amount"`
+			Data      struct {
+				BasicPrice   float64 `json:"basic_price"`
+				TrafficBytes int     `json:"traffic_bytes"`
+				TrafficPrice float64 `json:"traffic_price"`
+			} `json:"data"`
+		} `json:"Records"`
+	} `json:"data"`
+}
+
+// 云应用购买雨点请求
+type BuyRaindropRequest struct {
+	PlanID       int `json:"plan_id"`
+	WithCouponID int `json:"with_coupon_id"`
+}
+
 const (
 	TBPass   = "关注成功"
 	BiliPass = "雨云爱你"

@@ -115,7 +115,7 @@ func (c *Client) SetRcsEipDescription(id int, ip string, desc string) (*BasicOpe
 //
 // options: RCS查询参数 可以用 MarshalRCSQueryParameters 获取.
 func (c *Client) GetRcsList(options string) (*RcsListResponse, error) {
-	path := "/product/rcs"
+	path := fmt.Sprintf("/product/rcs?options=%s", options)
 
 	var resp RcsListResponse
 	err := c.DoRequest("GET", path, nil, &resp)
@@ -273,7 +273,7 @@ func (c *Client) DisCardIP(id int, req DisCardRcsIPRequest) (*BasicOperationResp
 //
 // options: RCS查询参数 可以用 MarshalRCSQueryParameters 获取.
 func (c *Client) GetFirewallRules(id int, options string) (*RcsFirewallRuleList, error) {
-	path := fmt.Sprintf("/product/rcs/%d/firewall/rule", id)
+	path := fmt.Sprintf("/product/rcs/%d/firewall/rule?options=%s", id, options)
 
 	var resp RcsFirewallRuleList
 	err := c.DoRequest("GET", path, options, &resp)
@@ -533,7 +533,7 @@ func (c *Client) GetRcsUsageList() (*RcsUsageList, error) {
 //
 // options: 查询参数 可以用 MarshalWorkerorderQueryParameters 获取.
 func (c *Client) GetWorkOrderList(options string) (*WorkorderList, error) {
-	path := "/workorder/"
+	path := fmt.Sprintf("/workorder/?options=%s", options)
 
 	var resp WorkorderList
 	err := c.DoRequest("GET", path, nil, &resp)
@@ -663,6 +663,58 @@ func (c *Client) SetWorkorderStatus(id int, status string) (*BasicOperationRespo
 
 	var resp BasicOperationResponse
 	err := c.DoRequest("PATCH", path, SetWorkorderStatusRequest{Status: status}, &resp)
+
+	return &resp, err
+}
+
+/* ===================云应用=================== */
+
+// 云应用获取区域信息
+func (c *Client) GetRcaRegionInfo() (*RcaRegionInfo, error) {
+	path := "/product/rca/region"
+
+	var resp RcaRegionInfo
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 云应用获取雨点余额使用情况
+func (c *Client) GetRcaRaindropUsage() (*RcaRaindropUsage, error) {
+	path := "/product/rca/raindrop/usage"
+
+	var resp RcaRaindropUsage
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 云应用获取雨点套餐列表
+func (c *Client) GetRcaRaindropPlansList() (*RaindropPlansList, error) {
+	path := "/product/rca/raindrop/plans"
+
+	var resp RaindropPlansList
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 云应用获取雨点消费历史
+// options: 查询参数 可以用 MarshalStandQueryParameters 获取.
+func (c *Client) GetRaindropConsumeLog(options string) (*RaindropConsumeLog, error) {
+	path := fmt.Sprintf("/product/rca/raindrop/consume_log?options=%s", options)
+
+	var resp RaindropConsumeLog
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+func (c *Client) BuyRaindrop(planID int, couponID int) (*BasicOperationResponse, error) {
+	path := "/product/rca/raindrop"
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, BuyRaindropRequest{PlanID: planID, WithCouponID: couponID}, &resp)
 
 	return &resp, err
 }
