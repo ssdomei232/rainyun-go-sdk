@@ -386,4 +386,96 @@ func (c *Client) EnableRcsAutoRenew(id int, req EnableRcsAutoRenewRequest) (*Bas
 	return &resp, err
 }
 
-//
+// RCS重置密码
+// id: RCS ID
+// newPass: 新密码,留空则自动生成
+func (c *Client) ResetRcsPassword(id int, newPass string) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/reset-password", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, ResetRcsPasswordRequest{Password: newPass}, &resp)
+
+	return &resp, err
+}
+
+// RCS开机
+// id: RCS ID
+func (c *Client) StartRcs(id int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/start", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, nil, &resp)
+
+	return &resp, err
+}
+
+// RCS关机
+// id: RCS ID
+func (c *Client) StopRcs(id int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/stop", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 设置RCS标签
+// id: RCS ID
+// tag: 标签
+func (c *Client) SetRcsTag(id int, tag string) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/tag", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, SetRcsTagRequest{TagName: tag}, &resp)
+
+	return &resp, err
+}
+
+// RCS充流量
+// id: RCS ID
+// count: 充多少(单位G)
+func (c *Client) ChargeRcsTrafic(id int, count int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/traffic/charge", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, nil, &resp)
+
+	return &resp, err
+}
+
+// RCS限流
+// id: RCS ID
+// threshold: 日流量阈值(G)
+// limit: 限制带宽(M)
+func (c *Client) LimitRcsTrafic(id int, threshold int, limit int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/traffic/limit", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, LimitRcsTrafficRequest{DayTrafficInGb: threshold, TrafficLimit: limit}, &resp)
+
+	return &resp, err
+}
+
+// RCS升级
+// id: RCS ID
+// plan: 升级到的套餐ID
+// coupon: 优惠券ID,默认为0
+func (c *Client) UpgradeRcs(id int, plan int, coupon int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rcs/%d/upgrade", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, UpgradeRcsRequest{DestPlan: plan, WithCouponID: coupon}, &resp)
+
+	return &resp, err
+}
+
+// 获取RCS使用情况列表
+func (c *Client) GetRcsUsageList() (*RcsUsageList, error) {
+	path := "/product/rcs/usage"
+
+	var resp RcsUsageList
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}

@@ -19,6 +19,8 @@ const (
 	CodeApikeyError Code = 30039
 	// CodeRequiresSecondaryVerification 需要二次验证
 	CodeRequiresSecondaryVerification Code = 30043
+	// CodeInvalidVerification 验证无效(验证码错误)
+	CodeInvalidVerification Code = 30047
 	// CodePortIsAlreadyInUse 端口已被使用
 	CodePortIsAlreadyInUse Code = 70020
 	// CodeProductHasExpired 产品已过期
@@ -1022,6 +1024,91 @@ type RenewRcsRequest struct {
 // RCS自动续费选项
 type EnableRcsAutoRenewRequest struct {
 	AutoRenewOption bool `json:"auto_renew_option"`
+}
+
+// RCS重置密码
+type ResetRcsPasswordRequest struct {
+	Password string `json:"password"` // 新密码,留空则自动生成
+}
+
+// 设置RCS标签
+type SetRcsTagRequest struct {
+	TagName string `json:"tag_name"`
+}
+
+// RCS充流量
+type ChargeRcsTraficRequest struct {
+	TrafficInGb int `json:"traffic_in_gb"` // 充多少G
+}
+
+// RCS限流
+type LimitRcsTrafficRequest struct {
+	DayTrafficInGb int `json:"day_traffic_in_gb"` // 日流量阈值(G)
+	TrafficLimit   int `json:"traffic_limit"`     // 限制带宽(M)
+}
+
+// RCS升级
+type UpgradeRcsRequest struct {
+	DestPlan     int `json:"dest_plan"`      // 升级到的套餐ID
+	WithCouponID int `json:"with_coupon_id"` // 优惠券ID,默认为0
+}
+
+// RCS操作系统列表
+type RcsOSList struct {
+	Code int `json:"code"`
+	Data []struct {
+		ID             int    `json:"id"`      // 系统ID
+		Region         string `json:"region"`  // 地域
+		Subtype        string `json:"subtype"` // 类型(kvm)
+		Machine        string `json:"machine"` // unknown
+		Name           string `json:"name"`    // 英文名
+		Version        string `json:"version"` // 版本
+		SyncStatus     string `json:"sync_status"`
+		OsType         string `json:"os_type"`         // 系统类型(windows/linux)
+		ChineseName    string `json:"chinese_name"`    // 中文名
+		Icon           string `json:"icon"`            // 图标
+		IsWithBbr      bool   `json:"is_with_bbr"`     // 是否支持BBR
+		IsEol          bool   `json:"is_eol"`          // 是否已过时
+		IsAvailable    bool   `json:"is_available"`    // 是否可用
+		Order          int    `json:"order"`           // 排序
+		LatestFilename string `json:"latest_filename"` // 最新文件名
+		NoVMAgent      bool   `json:"no_vm_agent"`     // 是否无虚拟机Agent
+	} `json:"data"`
+}
+
+// RCS使用情况列表
+type RcsUsageList struct {
+	Code int `json:"code"`
+	Data struct {
+		TotalRecords int `json:"TotalRecords"`
+		Records      []struct {
+			ID     int    `json:"ID"`
+			Tag    string `json:"Tag"`
+			IP     string `json:"IP"`
+			System string `json:"System"`
+			Region string `json:"Region"`
+			Status string `json:"Status"`
+			Usage  struct {
+				CPU     float64 `json:"CPU"`
+				MaxMem  int64   `json:"MaxMem"`
+				FreeMem int64   `json:"FreeMem"`
+				UsedMem int     `json:"UsedMem"`
+				Disks   struct {
+					NAMING_FAILED struct {
+						Total int64 `json:"Total"`
+						Used  int64 `json:"Used"`
+					} `json:"/"`
+				} `json:"Disks"`
+				DiskRead    int         `json:"DiskRead"`
+				DiskWrite   float64     `json:"DiskWrite"`
+				NetOut      float64     `json:"NetOut"`
+				NetIn       float64     `json:"NetIn"`
+				SmartHealth interface{} `json:"SmartHealth"`
+				SmartTemp   int         `json:"SmartTemp"`
+				UpdateTime  int         `json:"UpdateTime"`
+			} `json:"Usage"`
+		} `json:"Records"`
+	} `json:"data"`
 }
 
 const (

@@ -90,3 +90,13 @@ func publicDoRequest(method, endpoint string, reqData any, respData any) error {
 
 	return client.DoRequest(method, endpoint, reqData, respData)
 }
+
+// 获取RCS操作系统列表
+func GetRcsOSList() (*RcsOSList, error) {
+	path := "/product/rcs/os"
+
+	var resp RcsOSList
+	err := publicDoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
