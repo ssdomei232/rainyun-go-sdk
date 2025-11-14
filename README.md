@@ -56,12 +56,12 @@ client := rain.NewClient("your-real-api-key")
 - [x] 积分兑换  
 - [x] rcs管理  
 - [x] 工单管理  
-- [ ] rca管理(working)  
+- [ ] rgs管理(working)  
 - [ ] ros管理  
-- [ ] rgs管理  
 - [ ] 二级面板  
 
 短期内不会支持的操作(如果你有这种操作的请求和返回示例欢迎发到issue中或提PR):
 
+- [ ] rca管理(淋雨说有大变化,核心部分暂缓)
 - [ ] 裸金属管理(没钱测试)  
 - [ ] 域名管理(我建议你买了直接转到cloudflare/tx/alidns)  

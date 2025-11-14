@@ -884,3 +884,25 @@ func (c *Client) ListRcaProjectIPs(id int) (*RcaIPInfo, error) {
 
 	return &resp, err
 }
+
+// 云应用创建App模板
+func (c *Client) CreateRcaAppTemplate(req *RcaCreateAppTemplateRequest) (*RcaCreateAppTemplateResponse, error) {
+	path := "/product/rca/appstore/"
+
+	var resp RcaCreateAppTemplateResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
+
+// 创建App模板版本
+//
+// id: RCA项目ID
+func (c *Client) CreateRcaAppTemplateVersion(id int, req *CreateAppTemplateVersionRequest) (*CreateAppTemplateVersionResponse, error) {
+	path := fmt.Sprintf("/product/rca/appstore/%d/release", id)
+
+	var resp CreateAppTemplateVersionResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}

@@ -1,7 +1,9 @@
 // TODO: 统一处理标准查询参数
 package rainyun_go_sdk
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 // RCS查询参数
 type RCSQueryParameters struct {
