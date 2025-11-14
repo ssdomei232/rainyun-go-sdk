@@ -1446,25 +1446,25 @@ type RcaProjectList struct {
 			CreateDate int    `json:"CreateDate"`
 			NodeUUID   string `json:"NodeUUID"`
 			Node       struct {
-				UUID              string      `json:"UUID"`
-				AuthKey           string      `json:"AuthKey"`
-				Region            string      `json:"Region"`
-				IPRegion          string      `json:"IpRegion"`
-				Machine           string      `json:"Machine"`
-				Product           string      `json:"Product"`
-				Subtype           string      `json:"Subtype"`
-				ChineseName       string      `json:"ChineseName"`
-				PhysicalNode      string      `json:"PhysicalNode"`
-				Config            string      `json:"Config"`
-				Stock             interface{} `json:"Stock"`
-				StatusData        string      `json:"StatusData"`
-				ShowMonitorData   string      `json:"ShowMonitorData"`
-				UpdateTime        string      `json:"UpdateTime"`
-				GitRepositoryName string      `json:"GitRepositoryName"`
-				CertifyRequired   bool        `json:"CertifyRequired"`
-				IsDisableBackup   bool        `json:"IsDisableBackup"`
-				IsHidden          bool        `json:"IsHidden"`
-				NodeName          string      `json:"NodeName"`
+				UUID              string `json:"UUID"`
+				AuthKey           string `json:"AuthKey"`
+				Region            string `json:"Region"`
+				IPRegion          string `json:"IpRegion"`
+				Machine           string `json:"Machine"`
+				Product           string `json:"Product"`
+				Subtype           string `json:"Subtype"`
+				ChineseName       string `json:"ChineseName"`
+				PhysicalNode      string `json:"PhysicalNode"`
+				Config            string `json:"Config"`
+				Stock             any    `json:"Stock"`
+				StatusData        string `json:"StatusData"`
+				ShowMonitorData   string `json:"ShowMonitorData"`
+				UpdateTime        string `json:"UpdateTime"`
+				GitRepositoryName string `json:"GitRepositoryName"`
+				CertifyRequired   bool   `json:"CertifyRequired"`
+				IsDisableBackup   bool   `json:"IsDisableBackup"`
+				IsHidden          bool   `json:"IsHidden"`
+				NodeName          string `json:"NodeName"`
 			} `json:"Node"`
 			Status                  string `json:"Status"`
 			StopReason              string `json:"StopReason"`
@@ -1535,8 +1535,193 @@ type RcaProjectList struct {
 	} `json:"data"`
 }
 
+// Rca项目的指标信息,示例如下:
+/*
+{
+  "code": 200,
+  "data": {
+    "Columns": [
+      "time",
+      "cpu",
+      "memory",
+      "net_in",
+      "net_out",
+      "disk_usage"
+    ],
+    "Values": [
+      [
+        1763042400,
+        0.2723370666666666,
+        9235387.733333332,
+        119.27655555556218,
+        552.9749444442988,
+        0
+      ]
+    ]
+  }
+}
+*/
+type RcaProjectMetrics struct {
+	Code int `json:"code"`
+	Data struct {
+		Columns []string    `json:"Columns"`
+		Values  [][]float64 `json:"Values"`
+	} `json:"data"`
+}
+
+// 云应用项目详情
+type RcaProjectDetails struct {
+	Code int `json:"code"`
+	Data struct {
+		Data struct {
+			ID         int    `json:"ID"`
+			UID        int    `json:"UID"`
+			PlanID     int    `json:"PlanID"`
+			CreateDate int    `json:"CreateDate"` // 创建时间
+			NodeUUID   string `json:"NodeUUID"`
+			Node       struct {
+				UUID              string      `json:"UUID"`
+				AuthKey           string      `json:"AuthKey"`
+				Region            string      `json:"Region"`
+				IPRegion          string      `json:"IpRegion"`
+				Machine           string      `json:"Machine"`
+				Product           string      `json:"Product"`
+				Subtype           string      `json:"Subtype"`
+				ChineseName       string      `json:"ChineseName"`
+				PhysicalNode      string      `json:"PhysicalNode"`
+				Config            string      `json:"Config"`
+				Stock             interface{} `json:"Stock"`
+				StatusData        string      `json:"StatusData"`
+				ShowMonitorData   string      `json:"ShowMonitorData"`
+				UpdateTime        string      `json:"UpdateTime"`
+				GitRepositoryName string      `json:"GitRepositoryName"`
+				CertifyRequired   bool        `json:"CertifyRequired"`
+				IsDisableBackup   bool        `json:"IsDisableBackup"`
+				IsHidden          bool        `json:"IsHidden"`
+				NodeName          string      `json:"NodeName"`
+			} `json:"Node"`
+			Status                  string `json:"Status"`
+			StopReason              string `json:"StopReason"`
+			RewardPointsToBeCollect int    `json:"RewardPointsToBeCollect"`
+			Tag                     string `json:"Tag"`
+			ExpDate                 int    `json:"ExpDate"`
+			ExpireNotice            int    `json:"ExpireNotice"`
+			AutoRenew               bool   `json:"AutoRenew"`
+			UnsubscribeAble         bool   `json:"UnsubscribeAble"`
+			Try                     bool   `json:"Try"`
+			Name                    string `json:"name"`
+			RegionID                int    `json:"region_id"`
+			Region                  struct {
+				ID                   int    `json:"id"`
+				Name                 string `json:"name"`
+				ChineseName          string `json:"chinese_name"`
+				WebsiteServiceDomain string `json:"website_service_domain"`
+				SftpServiceDomain    string `json:"sftp_service_domain"`
+				PublicServiceDomain  string `json:"public_service_domain"`
+				PriceInfo            struct {
+					CPU     float64 `json:"cpu"`
+					Memory  float64 `json:"memory"`
+					Ipv4    float64 `json:"ipv4"`
+					Traffic int     `json:"traffic"`
+					Disk    float64 `json:"disk"`
+				} `json:"price_info"`
+			} `json:"region"`
+			Namespace      string `json:"namespace"`
+			APIToken       string `json:"APIToken"`
+			ResourceLimits struct {
+				MaxCPU    int `json:"max_cpu"`
+				MaxMemory int `json:"max_memory"`
+			} `json:"resource_limits"`
+			UsageData struct {
+				CPU             int    `json:"cpu"`
+				Memory          int    `json:"memory"`
+				NetOut          int    `json:"net_out"`
+				NetIn           int    `json:"net_in"`
+				DiskUsage       int    `json:"disk_usage"`
+				TrafficToday    int    `json:"traffic_today"`
+				Status          string `json:"status"`
+				StatusReason    string `json:"status_reason"`
+				AllocatedCPU    int    `json:"allocated_cpu"`
+				AllocatedMemory int    `json:"allocated_memory"`
+				AppCount        int    `json:"app_count"`
+				WebsiteCount    int    `json:"website_count"`
+				DatabaseCount   int    `json:"database_count"`
+				Ipv4Count       int    `json:"ipv4_count"`
+				HealthyPods     int    `json:"healthy_pods"`
+				UnhealthyPods   int    `json:"unhealthy_pods"`
+			} `json:"usage_data"`
+			VolumeSize     int     `json:"volume_size"`
+			ChargeType     string  `json:"charge_type"`  // 计费类型: elastic
+			HourlyPrice    float64 `json:"hourly_price"` // 小时价格
+			NextChargeTime int     `json:"next_charge_time"`
+			BackupTarget   struct {
+				Type              string `json:"type"`                // 目标类型，支持项目本地备份或者远程S3存储(local/s3)
+				S3Endpoint        string `json:"s3_endpoint"`         // S3的端点（仅支持Virtual Host，不支持Path-Style模式）
+				S3Bucket          string `json:"s3_bucket"`           // S3存储桶名
+				S3AccessKey       string `json:"s3_access_key"`       // S3的AK
+				S3SecretKey       string `json:"s3_secret_key"`       // S3的SK
+				S3BackupDirectory string `json:"s3_backup_directory"` // s3备份存储的目录
+			} `json:"backup_target"` // 备份目标
+			SftpSetting   any  `json:"sftp_setting"`
+			IdleAlarmFlag bool `json:"idle_alarm_flag"`
+			PaymentDueEnd int  `json:"payment_due_end"`
+		} `json:"Data"`
+	} `json:"data"`
+}
+
+// 云应用项目设置备份目标请求
+type SetRcaProjectBackupTargetRequest struct {
+	S3AccessKey       string `json:"s3_access_key"`       // S3的AK
+	S3BackupDirectory string `json:"s3_backup_directory"` // s3备份存储的目录
+	S3Bucket          string `json:"s3_bucket"`           // S3存储桶名
+	S3Endpoint        string `json:"s3_endpoint"`         // S3的端点（仅支持Virtual Host，不支持Path-Style模式）
+	S3SecretKey       string `json:"s3_secret_key"`       // S3的SK
+	TargetType        string `json:"target_type"`         // 目标类型，支持项目本地备份或者远程S3存储(local/s3)
+}
+
+// 云应用项目磁盘扩容请求
+type RcaProjectDiskExpansionRequest struct {
+	NewDiskSize int `json:"new_disk_size"` // 以GB显示的新项目磁盘大小
+}
+
+// 云应用增加IP地址请求
+type RcaAddsIpAddressRequest struct {
+	Ipv4Count int `json:"ipv4_count"` // 要添加的IPv4地址数量
+	Ipv6Count int `json:"ipv6_count"` // 要添加的IPv6地址数量
+}
+
+// 云应用移除IP地址请求
+type RcaRemoveIPRequest struct {
+	IPID int `json:"ip_id"` // 要删除的IP地址ID
+}
+
+// 云应用项目修改SFTP设置请求
+type RcaProjectSetSftpConfigRequest struct {
+	Password string `json:"password"`
+	Username string `json:"username"`
+}
+
+// 云应用IP信息
+type RcaIPInfo struct {
+	Code int `json:"code"`
+	Data []struct {
+		ID            int    `json:"id"`           // ip id
+		Region        string `json:"region"`       // 地域
+		Type          string `json:"type"`         // ip类型(IPv4/IPv6)
+		IP            string `json:"ip"`           // ip地址
+		AddressPool   string `json:"address_pool"` // ip池(user-ip-pool)
+		Gateway       string `json:"gateway"`      // 网关
+		Block         string `json:"block"`        // CIDR(24)
+		UID           int    `json:"uid"`          // 用户id
+		ProjectID     int    `json:"project_id"`
+		Info          string `json:"info"`
+		AllocatedDate int    `json:"allocated_date"` // 分配时间
+	} `json:"data"`
+}
+
 const (
 	TBPass   = "关注成功"
 	BiliPass = "雨云爱你"
 	QQPass   = "我爱雨云"
+	ZZY      = "关注雨云谢谢喵"
 )

@@ -780,3 +780,107 @@ func (c *Client) DestroyRcaProject(id int) (*BasicOperationResponse, error) {
 
 	return &resp, err
 }
+
+// 获取Rca项目的指标信息
+//
+// id: RCA项目ID
+//
+// starttime: 开始时间(timestamp)
+//
+// endtime: 结束时间(timestamp)
+func (c *Client) GetRcaProjectMetrics(id int, startTime int, endTime int) (*RcaProjectMetrics, error) {
+	path := fmt.Sprintf("/product/rca/project/%d/metrics?start_time=%d&end_time=%d", id, startTime, endTime)
+
+	var resp RcaProjectMetrics
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 获取云应用项目详情
+//
+// id: RCA项目ID
+func (c *Client) GetRcaProjectDetail(id int) (*RcaProjectDetails, error) {
+	path := fmt.Sprintf("/product/rca/project/%d/", id)
+
+	var resp RcaProjectDetails
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 云应用项目设置备份目标
+//
+// id: RCA项目ID
+func (c *Client) SetRcaProjectBackupTarget(id int, req *SetRcaProjectBackupTargetRequest) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rca/project/%d/backup_target", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("PATCH", path, req, &resp)
+
+	return &resp, err
+}
+
+// 云应用项目磁盘扩容
+//
+// id: RCA项目ID
+func (c *Client) ExpandRcaProjectDisk(id int, req *RcaProjectDiskExpansionRequest) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rca/project/%d/disk_expand", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
+
+// 云应用增加IP地址
+//
+// id: RCA项目ID
+func (c *Client) AddRcsProjectIP(id int, req *RcaAddsIpAddressRequest) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rca/project/%d/eip", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
+
+// 云应用移除IP地址
+//
+// id: RCA项目ID
+func (c *Client) RemoveRcaProjectIP(id int, req *RcaRemoveIPRequest) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rca/project/%d/eip", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("DELETE", path, req, &resp)
+
+	return &resp, err
+}
+
+// 云应用项目修改SFTP设置
+//
+// id: RCA项目ID
+//
+// password: 密码
+//
+// username: 用户名
+func (c *Client) SetRcaProjectSFTPConfig(id int, password string, username string) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rca/project/%d/sftp", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("PATCH", path, RcaProjectSetSftpConfigRequest{Password: password, Username: username}, &resp)
+
+	return &resp, err
+}
+
+// 云应用项目列出IP地址
+//
+// id: RCA项目ID
+func (c *Client) ListRcaProjectIPs(id int) (*RcaIPInfo, error) {
+	path := fmt.Sprintf("/product/rca/project/%d/eip", id)
+
+	var resp RcaIPInfo
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
