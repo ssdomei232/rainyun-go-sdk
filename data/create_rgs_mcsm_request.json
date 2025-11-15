@@ -1,0 +1,28 @@
+{
+  "subtype": "mcsm",
+  "plan_id": 101,
+  "config": {
+    "cpu": 2,
+    "memory": 4,
+    "net_out": 50,
+    "base_disk": 10,
+    "data_disk": 0,
+    "allocation": 5,
+    "database": 0,
+    "backup": 0
+  },
+  "duration": 1,
+  "pay_mode": "month",
+  "os_id": 3,
+  "panel_user": "mei",
+  "egg_type_id": 258,
+  "with_eip_num": 0,
+  "with_eip_flags": "",
+  "with_eip_type": "",
+  "cpu_limit_mode": false,
+  "with_coupon_id": 0,
+  "try": true,
+  "node_uuid": "",
+  "zone": "",
+  "online_mode": false
+}

@@ -3,6 +3,7 @@ package rainyun_go_sdk
 
 import (
 	"encoding/json"
+	"strconv"
 )
 
 // 标准查询参数
@@ -25,4 +26,14 @@ func EncodingStandardQueryParameters(page int, perPage int) string {
 	result, _ := json.Marshal(&queryParameters)
 
 	return string(result)
+}
+
+// 获取VNC连接URL
+func GetVncConnectURL(v *VncConnectionInfo) (string, error) {
+	decoded, err := strconv.Unquote(v.Data.VNCProxyURL)
+	if err != nil {
+		return "", err
+	}
+
+	return decoded, nil
 }

@@ -1,0 +1,35 @@
+{
+  "subtype": "kvm",
+  "plan_id": 303,
+  "config": {
+    "cpu": 2,
+    "memory": 4,
+    "net_out": 10,
+    "base_disk": 30,
+    "data_disk": 20
+  },
+  "duration": 1,
+  "pay_mode": "month",
+  "os_id": 14,
+  "panel_user": "mei",
+  "egg_type_id": 262,
+  "with_eip_num": 1,
+  "with_eip_flags": "",
+  "with_eip_type": "",
+  "cpu_limit_mode": false,
+  "with_coupon_id": 0,
+  "try": true,
+  "node_uuid": "",
+  "zone": "",
+  "online_mode": true,
+  "app_vars": [
+    {
+      "app_id": 10,
+      "vars": {
+        "jvm": "Dragonwell",
+        "version": "21.0.7.0.7%2B6/Alibaba_Dragonwell_Standard_21.0.7.0.7.6_x64_linux.tar.gz",
+        "java_cmd": "java"
+      }
+    }
+  ]
+}
