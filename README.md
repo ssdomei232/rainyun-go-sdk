@@ -12,6 +12,9 @@
 > [!WARNING]  
 > 本项目由第三方开发,不保证可用性和及时性,api接口的变更我们无法即时获知,PR and Issues are welcome.
 
+> [!TIP]
+> 直播地址: [https://live.mmeiblog.cn/web/cinema/3205c0020f1e40af80d02e45d772203f](https://live.mmeiblog.cn/web/cinema/3205c0020f1e40af80d02e45d772203f) (周五晚/周六/周天早)
+
 ## 使用 🥑
 
 1. 下载包

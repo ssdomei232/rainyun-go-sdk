@@ -113,7 +113,7 @@ func (c *Client) SetRcsEipDescription(id int, ip string, desc string) (*BasicOpe
 
 // 获取 RCS 列表
 //
-// options: RCS查询参数 可以用 MarshalRCSQueryParameters 获取.
+// options: RCS查询参数 可以用 EncodingStandardQueryParameters 获取.
 func (c *Client) GetRcsList(options string) (*RcsListResponse, error) {
 	path := fmt.Sprintf("/product/rcs?options=%s", options)
 
@@ -271,7 +271,7 @@ func (c *Client) DisCardIP(id int, req DisCardRcsIPRequest) (*BasicOperationResp
 //
 // id: RCS ID
 //
-// options: RCS查询参数 可以用 MarshalRCSQueryParameters 获取.
+// options: RCS查询参数 可以用 EncodingStandardQueryParameters 获取.
 func (c *Client) GetFirewallRules(id int, options string) (*RcsFirewallRuleList, error) {
 	path := fmt.Sprintf("/product/rcs/%d/firewall/rule?options=%s", id, options)
 
@@ -531,7 +531,7 @@ func (c *Client) GetRcsUsageList() (*RcsUsageList, error) {
 
 // 获取工单列表
 //
-// options: 查询参数 可以用 MarshalWorkerorderQueryParameters 获取.
+// options: 查询参数 可以用 EncodingStandardQueryParameters 获取.
 func (c *Client) GetWorkOrderList(options string) (*WorkorderList, error) {
 	path := fmt.Sprintf("/workorder/?options=%s", options)
 
@@ -701,7 +701,7 @@ func (c *Client) GetRcaRaindropPlansList() (*RaindropPlansList, error) {
 
 // 云应用获取雨点消费历史
 //
-// options: 查询参数 可以用 MarshalStandQueryParameters 获取.
+// options: 查询参数 可以用 EncodingStandardQueryParameters 获取.
 func (c *Client) GetRaindropConsumeLog(options string) (*RaindropConsumeLog, error) {
 	path := fmt.Sprintf("/product/rca/raindrop/consume_log?options=%s", options)
 
@@ -759,7 +759,7 @@ func (c *Client) CreateRcaProject(req *CreateRcaProjectRequest) (*CreateRcaProje
 
 // 云应用列出项目
 //
-// options: 查询参数 可以用 MarshalStandQueryParameters 获取.
+// options: 查询参数 可以用 EncodingStandardQueryParameters 获取.
 func (c *Client) ListRcaProjects(options string) (*RcaProjectList, error) {
 	path := fmt.Sprintf("/product/rca/project/?no_metrics=false&options=%s", options) // no_metrics 含义不明
 
@@ -897,7 +897,7 @@ func (c *Client) CreateRcaAppTemplate(req *RcaCreateAppTemplateRequest) (*RcaCre
 
 // 创建App模板版本
 //
-// id: RCA项目ID
+// id: APP模板ID
 func (c *Client) CreateRcaAppTemplateVersion(id int, req *CreateAppTemplateVersionRequest) (*CreateAppTemplateVersionResponse, error) {
 	path := fmt.Sprintf("/product/rca/appstore/%d/release", id)
 
