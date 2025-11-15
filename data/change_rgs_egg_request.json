@@ -1,0 +1,13 @@
+{
+   "egg_type_id": 258,
+   "save_dirs": [
+      "./world*",
+      "./logs",
+      "./config",
+      "./*.yml",
+      "./*.json",
+      "./server.properties",
+      "./plugins",
+      "./mods"
+   ]
+}

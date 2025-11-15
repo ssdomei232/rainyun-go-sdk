@@ -56,6 +56,13 @@ client := rain.NewClient("your-real-api-key")
 
 我们在`data`下存放了部分响应/请求实例，或许会对你有所帮助
 
+## 一些约定 🤝
+
+1. 在游戏云MCSM中，淋雨管游戏叫蛋(Egg)
+2. 1个月=31天
+3. 结构体注解写的不全面，请优先参考官方写的很烂的文档和`data`下的实例，实在找不到请提issue
+4. 用户可以登陆PVE是预期内行为
+
 ## TODO List
 
 按先后顺序:
@@ -63,8 +70,8 @@ client := rain.NewClient("your-real-api-key")
 - [x] 积分兑换  
 - [x] rcs管理  
 - [x] 工单管理  
-- [ ] rgs管理(working)  
-- [ ] ros管理  
+- [x] rgs管理  
+- [ ] ros管理(working)  
 - [ ] 二级面板  
 
 短期内不会支持的操作(如果你有这种操作的请求和返回示例欢迎发到issue中或提PR):

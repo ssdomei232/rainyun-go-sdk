@@ -2222,6 +2222,53 @@ type ChargeRgsCPURequest struct {
 	Points int    `json:"points"` // 消耗用户积分(支付方式为money时0)
 }
 
+// MCSM面板用户
+type McsmUser struct {
+	Name     string `json:"name"`
+	Password string `json:"password"`
+}
+
+// 游戏云配置信息
+type RgsConfig struct {
+	CPU        int `json:"cpu"`
+	Memory     int `json:"memory"`
+	NetOut     int `json:"net_out"`
+	NetIn      int `json:"net_in"`
+	BaseDisk   int `json:"base_disk"`
+	DataDisk   int `json:"data_disk"`
+	Allocation int `json:"allocation"`
+	Database   int `json:"database"`
+	Backup     int `json:"backup"`
+}
+
+// 游戏云升级价格
+type RgsUpgradePrice struct {
+	Code int `json:"code"`
+	Data struct {
+		Detail struct {
+			Price        int  `json:"price"`
+			AgentPrice   int  `json:"agent_price"`
+			StockPrice   int  `json:"stock_price"`
+			DefaultPrice int  `json:"default_price"`
+			CouponValue  int  `json:"coupon_value"`
+			SaleReward   int  `json:"sale_reward"`
+			AgentReward  int  `json:"agent_reward"`
+			AgentID      int  `json:"agent_id"`
+			IgnoreAgent  bool `json:"ignore_agent"`
+			PerScene     struct {
+				Upgrade int `json:"upgrade"`
+			} `json:"per_scene"`
+		} `json:"detail"`
+		Price int `json:"price"`
+	} `json:"data"`
+}
+
+// 游戏云更换egg(游戏类型)请求
+type ChangeRgsEggRequest struct {
+	EggTypeID int      `json:"egg_type_id"` // 蛋ID
+	SaveDirs  []string `json:"save_dirs"`   // 要保留的目录
+}
+
 const (
 	TBPass   = "关注成功"
 	BiliPass = "雨云爱你"

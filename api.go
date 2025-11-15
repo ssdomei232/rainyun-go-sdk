@@ -1,6 +1,7 @@
 package rainyun_go_sdk
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/url"
 )
@@ -1354,4 +1355,74 @@ func (c *Client) GetRgsPveAddress(id int) (pveAddress string, err error) {
 	}
 
 	return parsedURL.Hostname(), err
+}
+
+// 创建MCSM面板用户
+//
+// name: 用户名
+//
+// password: 密码
+func (c *Client) CreateMcsmUser(name string, password string) (*BasicOperationResponse, error) {
+	path := "/product/rgs/mcsm/panel_user/"
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, McsmUser{Name: name, Password: password}, &resp)
+
+	return &resp, err
+}
+
+// 编辑MCSM面板用户
+//
+// name: 用户名
+//
+// password: 密码
+func (c *Client) EditMcsmUser(name string, password string) (*BasicOperationResponse, error) {
+	path := "/product/rgs/mcsm/panel_user/"
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("PATCH", path, McsmUser{Name: name, Password: password}, &resp)
+
+	return &resp, err
+}
+
+// 删除MCSM面板用户
+//
+// name: 用户名
+func (c *Client) DeleteMcsmUser(name string) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rgs/mcsm/panel_user/%s", name)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("DELETE", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 获取游戏云升级价格
+//
+// id: RCS ID, duration: 续费时长(月), coupon: 优惠券ID
+func (c *Client) GetRgsUpgradePrice(id int, duration int, couponID int, config *RgsConfig) (*RgsUpgradePrice, error) {
+	configByte, err := json.Marshal(config)
+	configString := string(configByte)
+	path := fmt.Sprintf("/product/rgs/price?scene=upgrade&product_id=%d&duration=%d&with_coupon_id=%d&is_old=true&config=%s", id, duration, couponID, configString)
+
+	var resp RgsUpgradePrice
+	err = c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 游戏云更换egg(游戏类型)
+//
+// 此操作需要二步验证
+//
+// eggTypeID: 游戏类型ID
+//
+// saveDirs: 要保留的目录
+func (c *Client) ChangeRgsEgg(id int, eggTypeID int, saveDirs []string) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/rgs/%d/change-egg", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, ChangeRgsEggRequest{EggTypeID: eggTypeID, SaveDirs: saveDirs}, &resp)
+
+	return &resp, err
 }
