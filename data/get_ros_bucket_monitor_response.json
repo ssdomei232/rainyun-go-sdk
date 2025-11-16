@@ -1,0 +1,21 @@
+{
+    "code": 200,
+    "data": {
+        "Columns": [
+            "time",
+            "minio_bucket_usage_total_bytes",
+            "minio_bucket_traffic_sent_bytes",
+            "minio_bucket_traffic_received_bytes",
+            "minio_bucket_requests_total"
+        ],
+        "Values": [
+            [
+                1763260790,
+                null,
+                null,
+                null,
+                1
+            ]
+        ]
+    }
+}

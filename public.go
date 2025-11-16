@@ -123,6 +123,28 @@ type RgsOSList struct {
 	} `json:"data"`
 }
 
+// 对象存储套餐列表
+type RosPlanList struct {
+	Code int `json:"code"`
+	Data []struct {
+		ID                 int     `json:"id"`
+		Region             string  `json:"region"`
+		Subtype            string  `json:"subtype"`
+		PlanName           string  `json:"plan_name"`
+		Machine            string  `json:"machine"`
+		ChargeType         string  `json:"charge_type"`
+		Chinese            string  `json:"chinese"`
+		IsFree             bool    `json:"is_free"`
+		PointRenewPrice    any     `json:"point_renew_price"` // 积分续费价格
+		IsSelling          bool    `json:"is_selling"`
+		Price              int     `json:"price"`
+		StorageSize        int     `json:"storage_size"`
+		Bandwidth          int     `json:"bandwidth"`
+		ExtraTransferPrice float64 `json:"extra_transfer_price"`
+		ExtraStoragePrice  float64 `json:"extra_storage_price"`
+	} `json:"data"`
+}
+
 // GetAppConfig 获取页面信息.
 func GetAppConfig() (*AppConfig, error) {
 	path := "/app_config"
@@ -196,6 +218,16 @@ func GetRgsOSList() (*RgsOSList, error) {
 	path := "/product/rgs/os-templates"
 
 	var resp RgsOSList
+	err := publicDoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 获取对象存储套餐列表
+func GetRosPlanList() (*RosPlanList, error) {
+	path := "/product/ros/plans"
+
+	var resp RosPlanList
 	err := publicDoRequest("GET", path, nil, &resp)
 
 	return &resp, err
