@@ -1683,7 +1683,7 @@ func (c *Client) SetRosInstanceAutoRenewOption(instanceID int, isOpen bool) (*Ba
 	path := fmt.Sprintf("/product/ros/instance/%d/renew/option", instanceID)
 
 	var resp BasicOperationResponse
-	err := publicDoRequest("POST", path, RosInstanceAutoRenewOption{
+	err := c.DoRequest("POST", path, RosInstanceAutoRenewOption{
 		AutoRenewOption: isOpen,
 	}, &resp)
 
@@ -1701,7 +1701,7 @@ func (c *Client) ScaleRosInstance(instanceID int, desrPlan int, couponID int) (*
 	path := fmt.Sprintf("/product/ros/instance/%d/scale", instanceID)
 
 	var resp BasicOperationResponse
-	err := publicDoRequest("POST", path, ScaleRosInstanceRequest{
+	err := c.DoRequest("POST", path, ScaleRosInstanceRequest{
 		DestPlan:     desrPlan,
 		WithCouponID: couponID,
 	}, &resp)
@@ -1718,7 +1718,7 @@ func (c *Client) SetRosInstanceTags(instanceID int, tag string) (*BasicOperation
 	path := fmt.Sprintf("/product/ros/instance/%d/tag", instanceID)
 
 	var resp BasicOperationResponse
-	err := publicDoRequest("PATCH", path, SetRosInstnceTagRequest{TagName: tag}, &resp)
+	err := c.DoRequest("PATCH", path, SetRosInstnceTagRequest{TagName: tag}, &resp)
 
 	return &resp, err
 }
@@ -1732,7 +1732,7 @@ func (c *Client) ToggleRosInstanceExtraAccounting(instanceID int, isEnable bool)
 	path := fmt.Sprintf("/product/ros/instance/%d/toggle-extra-accounting", instanceID)
 
 	var resp BasicOperationResponse
-	err := publicDoRequest("PATCH", path, ToggleRosInstanceExtraAccountingRequest{IsEnable: isEnable}, &resp)
+	err := c.DoRequest("PATCH", path, ToggleRosInstanceExtraAccountingRequest{IsEnable: isEnable}, &resp)
 
 	return &resp, err
 }
@@ -1742,21 +1742,21 @@ func (c *Client) ToggleRosInstanceExtraAccounting(instanceID int, isEnable bool)
 // 获取面板用户列表
 //
 // options: 查询参数 可以用 EncodingStandardQueryParameters 获取.
-func GetPanelUserList(options string) (*PanelUserList, error) {
-	path := "/product/panel_users/"
+func (c *Client) GetPanelUserList(options string) (*PanelUserList, error) {
+	path := "/product/panel_users/?options=" + options
 
 	var resp PanelUserList
-	err := publicDoRequest("GET", path, options, &resp)
+	err := c.DoRequest("GET", path, options, &resp)
 
 	return &resp, err
 }
 
 // 增减面板用户产品
-func ModifyPanelUserProduct(req *ModifyPanelUserProductRequests) (*BasicOperationResponse, error) {
+func (c *Client) ModifyPanelUserProduct(req *ModifyPanelUserProductRequests) (*BasicOperationResponse, error) {
 	path := "/product/panel_users/"
 
 	var resp BasicOperationResponse
-	err := publicDoRequest("PUT", path, req, &resp)
+	err := c.DoRequest("PUT", path, req, &resp)
 
 	return &resp, err
 
@@ -1767,11 +1767,11 @@ func ModifyPanelUserProduct(req *ModifyPanelUserProductRequests) (*BasicOperatio
 // name： 子用户用户名
 //
 // pass： 子用户密码
-func CreatePanelUser(name string, pass string) (*BasicOperationResponse, error) {
+func (c *Client) CreatePanelUser(name string, pass string) (*BasicOperationResponse, error) {
 	path := "/product/panel_users/"
 
 	var resp BasicOperationResponse
-	err := publicDoRequest("POST", path, PanelUserRequest{Name: name, Password: pass}, &resp)
+	err := c.DoRequest("POST", path, PanelUserRequest{Name: name, Password: pass}, &resp)
 
 	return &resp, err
 }
@@ -1781,11 +1781,11 @@ func CreatePanelUser(name string, pass string) (*BasicOperationResponse, error) 
 // name： 子用户用户名
 //
 // pass： 子用户新密码
-func ChangePanelUserPassword(name string, pass string) (*BasicOperationResponse, error) {
+func (c *Client) ChangePanelUserPassword(name string, pass string) (*BasicOperationResponse, error) {
 	path := "/product/panel_users/"
 
 	var resp BasicOperationResponse
-	err := publicDoRequest("PATCH", path, PanelUserRequest{Name: name, Password: pass}, &resp)
+	err := c.DoRequest("PATCH", path, PanelUserRequest{Name: name, Password: pass}, &resp)
 
 	return &resp, err
 }
@@ -1793,11 +1793,152 @@ func ChangePanelUserPassword(name string, pass string) (*BasicOperationResponse,
 // 删除面板用户
 //
 // name： 子用户用户名
-func DeletePanelUser(name string) (*BasicOperationResponse, error) {
+func (c *Client) DeletePanelUser(name string) (*BasicOperationResponse, error) {
 	path := fmt.Sprintf("/product/panel_users/%s", name)
 
 	var resp BasicOperationResponse
-	err := publicDoRequest("DELETE", path, nil, &resp)
+	err := c.DoRequest("DELETE", path, nil, &resp)
+
+	return &resp, err
+}
+
+/* ================== 域名管理部分(不会支持域名购买，解析等功能，因为我建议你买了之后转到别的dns) ================== */
+
+// 备案域名过白
+//
+// domain： 域名
+//
+// region： 区域：cn-sq1/cn-nb1/cn-xy1/cn-cq1
+func (c *Client) AddDomainToWhiteList(domain string, region string) (*BasicOperationResponse, error) {
+	path := "/product/domain_white_list"
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, &AddDomainToWhiteListRequest{
+		Domain: domain,
+		Region: region,
+	}, &resp)
+
+	return &resp, err
+}
+
+// 获取域名白名单列表
+//
+// options: 查询参数 可以用 EncodingStandardQueryParameters 获取.
+func (c *Client) GetDomainWhiteList(options string) (*DomainWhitelist, error) {
+	path := fmt.Sprintf("/product/domain/whitelist?options=%s", options)
+
+	var resp DomainWhitelist
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 获取已验证域名列表
+//
+// options: 查询参数 可以用 EncodingStandardQueryParameters 获取.
+func (c *Client) GetVerifiedDomainList(options string) (*VerifiedDomainList, error) {
+	path := fmt.Sprintf("/product/domain/certify?options=%s", options)
+
+	var resp VerifiedDomainList
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 添加域名认证
+//
+// domain: 域名
+func (c *Client) AddDomainCertify(domain string) (*DomainVerificationInfo, error) {
+	path := "/product/domain/certify"
+
+	var resp DomainVerificationInfo
+	err := c.DoRequest("POST", path, AddDomainVerificationRequest{Domain: domain}, &resp)
+
+	return &resp, err
+}
+
+// 域名认证校验
+//
+// domain: 域名
+func (c *Client) VerifyDomainCertify(domain string) (*BasicOperationResponse, error) {
+	path := "/product/domain/certify/verify"
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, AddDomainVerificationRequest{Domain: domain}, &resp)
+
+	return &resp, err
+}
+
+/* ================== SSL部分 ================== */
+
+// 获取SSL证书列表
+//
+// options: 查询参数 可以用 EncodingStandardQueryParameters 获取.
+func (c *Client) GetSSLCertificateList(options string) (*SslCertificateList, error) {
+	path := "/product/sslcenter/?options=" + options
+
+	var resp SslCertificateList
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 上传SSL证书
+//
+// cert: 证书
+//
+// key： 私钥
+func (c *Client) UploadSSLCertificate(cert string, key string) (*BasicOperationResponse, error) {
+	path := "/product/sslcenter/"
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("POST", path, SslCertificate{
+		Cert: cert,
+		Key:  key,
+	}, &resp)
+
+	return &resp, err
+}
+
+// 获取SSL证书详情
+//
+// id: SSL证书ID
+func (c *Client) GetSslDetail(id int) (*SslDetail, error) {
+	path := fmt.Sprintf("/product/sslcenter/%d", id)
+
+	var resp SslDetail
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 替换SSL证书
+//
+// id: SSL证书ID
+//
+// cert: 证书
+//
+// key： 私钥
+func (c *Client) ReplaceSsl(id int, cert, key string) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/sslcenter/%d", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("PUT", path, SslCertificate{
+		Cert: cert,
+		Key:  key,
+	}, &resp)
+
+	return &resp, err
+}
+
+// 删除SSL证书
+//
+// id: SSL证书ID
+func (c *Client) DeleteSsl(id int) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/sslcenter/%d", id)
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("DELETE", path, nil, &resp)
 
 	return &resp, err
 }
