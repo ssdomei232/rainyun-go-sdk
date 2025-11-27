@@ -18,6 +18,20 @@ func (c *Client) GetUserInfo() (*UserInfo, error) {
 	return &resp, err
 }
 
+// 刷新 api 密钥.
+//
+// ⚠️不要轻易使用此方法
+func (c *Client) RefreshApikey() (*BasicOperationResponse, error) {
+	path := "/user/"
+
+	options := `{"option":"apikey"}`
+
+	var resp BasicOperationResponse
+	err := c.DoRequest("PATCH", path, options, &resp)
+
+	return &resp, err
+}
+
 // 获取可兑换积分产品列表.
 func (c *Client) GetUserRewardPruducts() (*UserRewardProducts, error) {
 	path := "/user/reward/products"
@@ -93,6 +107,26 @@ func (c *Client) Verify2FAResult(authCode int) (*BasicOperationResponse, error) 
 	return &resp, err
 }
 
+// 获取各产品数量
+func (c *Client) GetProductCountList() (*ProductCountList, error) {
+	path := "/product/"
+
+	var resp ProductCountList
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
+// 获取产品ID列表
+func (c *Client) GetProductIDList() (*ProductIDList, error) {
+	path := "/product/id_list"
+
+	var resp ProductIDList
+	err := c.DoRequest("GET", path, nil, &resp)
+
+	return &resp, err
+}
+
 /* ==============RCS============== */
 
 // 设置RCS IP描述
@@ -138,6 +172,8 @@ func (c *Client) CreateRcs(req *CreateRcsRequest) (*CreateRcsResopnse, error) {
 }
 
 // 获取RCS详情
+//
+// id: RCS ID
 func (c *Client) GetRcsDetails(id int) (*RcsDetails, error) {
 	path := fmt.Sprintf("/product/rcs/%d/", id)
 
@@ -1697,6 +1733,71 @@ func (c *Client) ToggleRosInstanceExtraAccounting(instanceID int, isEnable bool)
 
 	var resp BasicOperationResponse
 	err := publicDoRequest("PATCH", path, ToggleRosInstanceExtraAccountingRequest{IsEnable: isEnable}, &resp)
+
+	return &resp, err
+}
+
+/* ================== 域名面板部分 ================== */
+
+// 获取面板用户列表
+//
+// options: 查询参数 可以用 EncodingStandardQueryParameters 获取.
+func GetPanelUserList(options string) (*PanelUserList, error) {
+	path := "/product/panel_users/"
+
+	var resp PanelUserList
+	err := publicDoRequest("GET", path, options, &resp)
+
+	return &resp, err
+}
+
+// 增减面板用户产品
+func ModifyPanelUserProduct(req *ModifyPanelUserProductRequests) (*BasicOperationResponse, error) {
+	path := "/product/panel_users/"
+
+	var resp BasicOperationResponse
+	err := publicDoRequest("PUT", path, req, &resp)
+
+	return &resp, err
+
+}
+
+// 创建面板用户
+//
+// name： 子用户用户名
+//
+// pass： 子用户密码
+func CreatePanelUser(name string, pass string) (*BasicOperationResponse, error) {
+	path := "/product/panel_users/"
+
+	var resp BasicOperationResponse
+	err := publicDoRequest("POST", path, PanelUserRequest{Name: name, Password: pass}, &resp)
+
+	return &resp, err
+}
+
+// 面板用户改密
+//
+// name： 子用户用户名
+//
+// pass： 子用户新密码
+func ChangePanelUserPassword(name string, pass string) (*BasicOperationResponse, error) {
+	path := "/product/panel_users/"
+
+	var resp BasicOperationResponse
+	err := publicDoRequest("PATCH", path, PanelUserRequest{Name: name, Password: pass}, &resp)
+
+	return &resp, err
+}
+
+// 删除面板用户
+//
+// name： 子用户用户名
+func DeletePanelUser(name string) (*BasicOperationResponse, error) {
+	path := fmt.Sprintf("/product/panel_users/%s", name)
+
+	var resp BasicOperationResponse
+	err := publicDoRequest("DELETE", path, nil, &resp)
 
 	return &resp, err
 }
