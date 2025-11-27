@@ -73,9 +73,9 @@ client := rain.NewClient("your-real-api-key")
 - [x] 工单管理  
 - [x] rgs管理  
 - [x] ros管理  
-- [ ] 域名管理(working)  
-- [ ] 裸金属管理  
+- [x] 域名管理  
+- [ ] 裸金属管理(working)
 
 短期内不会支持的操作(如果你有这种操作的请求和返回示例欢迎发到issue中或提PR):
 
-- [ ] rca管理(淋雨说有大变化,核心部分暂缓) 
+- [ ] rca管理(淋雨说有大变化,核心部分暂缓)  
