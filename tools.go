@@ -1,4 +1,3 @@
-// TODO: 统一处理标准查询参数
 package rainyun_go_sdk
 
 import (

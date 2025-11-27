@@ -43,13 +43,13 @@ client := rain.NewClient("your-real-api-key")
 
 5. 错误码
 
-`client.Dorequest`会处理雨云返回的错误码并返还,相关定义位于 [model.go](https://git.mmeiblog.cn/mei/rainyun-go-sdk/src/branch/main/model.go)
+`client.Dorequest`会处理雨云返回的错误码并返还,相关定义位于 [model.go](https://github.com/ssdomei232/rainyun-go-sdk/blob/main/model.go)
 
 6. 验证码
 
-目前sdk无法处理验证码,[一键气死搬砖狐](https://api.zzwl.top/rainyun-tasks/)是应该是狐狸给加的白名单
+目前sdk无法处理验证码  
 
-7. 二次验证
+1. 二次验证
 
 二次验证的逻辑应该是只要进行了二次验证，那么一段时间内所有的需要二次验证的操作都是可以直接进行的
 
