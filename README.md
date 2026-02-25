@@ -3,8 +3,8 @@
 ## 简介 📜
 
 ![GoReport](https://goreportcard.com/badge/github.com/ssdomei232/rainyun-go-sdk)
-![GitHub go.mod Go version (subdirectory of monorepo)](https://img.shields.io/github/go-mod/go-version/ssdomei232/rainyun-go-sdk) 
-![GitHub](https://img.shields.io/github/license/ssdomei232/rainyun-go-sdk) 
+![GitHub go.mod Go version (subdirectory of monorepo)](https://img.shields.io/github/go-mod/go-version/ssdomei232/rainyun-go-sdk)
+![GitHub](https://img.shields.io/github/license/ssdomei232/rainyun-go-sdk)
 ![GitHub tag (with filter)](https://img.shields.io/github/v/tag/ssdomei232/rainyun-go-sdk)
 
 使用`rainyun-go-sdk`来顺畅的接入Rainyun API，物品兑换，个人信息查询...
@@ -32,6 +32,14 @@ import "github.com/ssdomei232/rainyun-go-sdk/rainyun/rcs"
 ```go
 // 使用 rainyun api key 创建client
 client := rain.NewClient("your-real-api-key")
+rcsClient := rcs.Client{Client: client}
+detail, err := rcsClient.GetRcsDetails(114514)
+ if err != nil {
+  log.Println("Error getting RCS details:", err)
+ }
+ fmt.Println("Backup Status:", detail.Data.RBSList)
+ fmt.Println("=================================")
+ fmt.Println("EIP Status:", detail.Data.EIPList)
 ```
 
 3. 错误码
