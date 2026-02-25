@@ -1,4 +1,4 @@
-module github.com/ssdomei232/rainyun-go-sdk
+module github.com/ssdomei232/rainyun-go-sdk/v2
 
 go 1.23.4
 
