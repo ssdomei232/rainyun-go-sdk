@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/ssdomei232/rainyun-go-sdk/rainyun/common"
+	"github.com/ssdomei232/rainyun-go-sdk/v2/rainyun/common"
 )
 
 // 设置RCS IP描述

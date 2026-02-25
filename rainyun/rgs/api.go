@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/ssdomei232/rainyun-go-sdk/rainyun/common"
-	"github.com/ssdomei232/rainyun-go-sdk/rainyun/rcs"
+	"github.com/ssdomei232/rainyun-go-sdk/v2/rainyun/common"
+	"github.com/ssdomei232/rainyun-go-sdk/v2/rainyun/rcs"
 )
 
 // 获取游戏云列表

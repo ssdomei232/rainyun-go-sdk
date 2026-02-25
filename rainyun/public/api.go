@@ -1,7 +1,7 @@
 package public
 
 import (
-	"github.com/ssdomei232/rainyun-go-sdk/rainyun/common"
+	"github.com/ssdomei232/rainyun-go-sdk/v2/rainyun/common"
 )
 
 // GetAppConfig 获取页面信息.

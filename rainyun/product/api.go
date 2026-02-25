@@ -3,7 +3,7 @@ package product
 import (
 	"fmt"
 
-	"github.com/ssdomei232/rainyun-go-sdk/rainyun/common"
+	"github.com/ssdomei232/rainyun-go-sdk/v2/rainyun/common"
 )
 
 // 获取各产品数量

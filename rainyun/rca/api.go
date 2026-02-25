@@ -3,7 +3,7 @@ package rca
 import (
 	"fmt"
 
-	"github.com/ssdomei232/rainyun-go-sdk/rainyun/common"
+	"github.com/ssdomei232/rainyun-go-sdk/v2/rainyun/common"
 )
 
 // 云应用获取区域信息

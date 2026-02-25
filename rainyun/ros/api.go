@@ -3,7 +3,7 @@ package ros
 import (
 	"fmt"
 
-	"github.com/ssdomei232/rainyun-go-sdk/rainyun/common"
+	"github.com/ssdomei232/rainyun-go-sdk/v2/rainyun/common"
 )
 
 // 创建对象存储实例
