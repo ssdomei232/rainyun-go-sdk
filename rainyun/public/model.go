@@ -1,6 +1,29 @@
-package rainyun_go_sdk
+package public
 
 import "time"
+
+// RCS操作系统列表
+type RcsOSList struct {
+	Code int `json:"code"`
+	Data []struct {
+		ID             int    `json:"id"`      // 系统ID
+		Region         string `json:"region"`  // 地域
+		Subtype        string `json:"subtype"` // 类型(kvm)
+		Machine        string `json:"machine"` // unknown
+		Name           string `json:"name"`    // 英文名
+		Version        string `json:"version"` // 版本
+		SyncStatus     string `json:"sync_status"`
+		OsType         string `json:"os_type"`         // 系统类型(windows/linux)
+		ChineseName    string `json:"chinese_name"`    // 中文名
+		Icon           string `json:"icon"`            // 图标
+		IsWithBbr      bool   `json:"is_with_bbr"`     // 是否支持BBR
+		IsEol          bool   `json:"is_eol"`          // 是否已过时
+		IsAvailable    bool   `json:"is_available"`    // 是否可用
+		Order          int    `json:"order"`           // 排序
+		LatestFilename string `json:"latest_filename"` // 最新文件名
+		NoVMAgent      bool   `json:"no_vm_agent"`     // 是否无虚拟机Agent
+	} `json:"data"`
+}
 
 // 页面信息
 type AppConfig struct {
@@ -143,92 +166,4 @@ type RosPlanList struct {
 		ExtraTransferPrice float64 `json:"extra_transfer_price"`
 		ExtraStoragePrice  float64 `json:"extra_storage_price"`
 	} `json:"data"`
-}
-
-// GetAppConfig 获取页面信息.
-func GetAppConfig() (*AppConfig, error) {
-	path := "/app_config"
-
-	var resp AppConfig
-	err := publicDoRequest("GET", path, nil, &resp)
-
-	return &resp, err
-}
-
-// GetRainyunForumNews 获取论坛公告.
-func GetRainyunForumNews() (*RainyunForumNews, error) {
-	path := "/news"
-
-	var resp RainyunForumNews
-	err := publicDoRequest("GET", path, nil, &resp)
-
-	return &resp, err
-}
-
-// GetNodeStatus 获取节点状态.
-// options: 标准查询参数 可以用 MarshalStandardQueryParameters 获取.
-func GetNodeStatus(options string) (*NodeStatus, error) {
-	path := "/status"
-
-	var resp NodeStatus
-	err := publicDoRequest("GET", path, options, &resp)
-
-	return &resp, err
-}
-
-// publicDoRequest 发送不需要登录的请求.
-func publicDoRequest(method, endpoint string, reqData any, respData any) error {
-	client := NewClient("")
-
-	return client.DoRequest(method, endpoint, reqData, respData)
-}
-
-// 获取RCS操作系统列表
-func GetRcsOSList() (*RcsOSList, error) {
-	path := "/product/rcs/os"
-
-	var resp RcsOSList
-	err := publicDoRequest("GET", path, nil, &resp)
-
-	return &resp, err
-}
-
-// 获取蛋(游戏)列表
-func GetEggList() (*EggList, error) {
-	path := "/product/rgs/egg"
-
-	var resp EggList
-	err := publicDoRequest("GET", path, nil, &resp)
-
-	return &resp, err
-}
-
-// 获取蛋(游戏类型)类型列表
-func GetEggTypeList() (*EggTypeList, error) {
-	path := "/product/rgs/egg_type"
-
-	var resp EggTypeList
-	err := publicDoRequest("GET", path, nil, &resp)
-
-	return &resp, err
-}
-
-// 获取游戏云系统列表
-func GetRgsOSList() (*RgsOSList, error) {
-	path := "/product/rgs/os-templates"
-
-	var resp RgsOSList
-	err := publicDoRequest("GET", path, nil, &resp)
-
-	return &resp, err
-}
-
-// 获取对象存储套餐列表
-func GetRosPlanList() (*RosPlanList, error) {
-	path := "/product/ros/plans"
-
-	var resp RosPlanList
-	err := publicDoRequest("GET", path, nil, &resp)
-
-	return &resp, err
 }

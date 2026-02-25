@@ -1,5 +1,4 @@
-// package rainyun_go_sdk provide a full-sdk for rainyun.com
-package rainyun_go_sdk
+package common
 
 import (
 	"encoding/json"

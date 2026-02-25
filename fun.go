@@ -1,1 +1,0 @@
-package rainyun_go_sdk

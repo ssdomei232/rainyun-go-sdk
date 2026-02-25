@@ -1,4 +1,4 @@
-package rainyun_go_sdk
+package common
 
 import (
 	"encoding/json"

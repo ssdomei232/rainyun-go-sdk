@@ -18,42 +18,27 @@
 
 ## 使用 🥑
 
-1. 下载包
-
-```bash
-go get github.com/ssdomei232/rainyun-go-sdk
-```
-
-2. 导入包
+1. 导入包
 
 ```go
-import rain "github.com/ssdomei232/rainyun-go-sdk"
+// 导入核心包
+import rain "github.com/ssdomei232/rainyun-go-sdk/rainyun/common"
+// 按需导入产品包
+import "github.com/ssdomei232/rainyun-go-sdk/rainyun/rcs"
 ```
 
-3. 使用包
-
-参考 👉[rainyun-go-sdk-example](https://git.mmeiblog.cn/mei/rainyun-go-sdk-example)
-
-4. Client 介绍
+2. Client 介绍
 
 ```go
 // 使用 rainyun api key 创建client
 client := rain.NewClient("your-real-api-key")
 ```
 
-5. 错误码
+3. 错误码
 
 `client.Dorequest`会处理雨云返回的错误码并返还,相关定义位于 [model.go](https://github.com/ssdomei232/rainyun-go-sdk/blob/main/model.go)
 
-6. 验证码
-
-目前sdk无法处理验证码  
-
-1. 二次验证
-
-二次验证的逻辑应该是只要进行了二次验证，那么一段时间内所有的需要二次验证的操作都是可以直接进行的
-
-8. 数据实例
+4. 数据实例
 
 我们在`data`下存放了部分响应/请求实例，或许会对你有所帮助
 
