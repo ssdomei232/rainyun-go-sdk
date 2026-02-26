@@ -87,3 +87,10 @@ type PanelUserRequest struct {
 	Name     string `json:"name"`
 	Password string `json:"password"`
 }
+
+// 积分续费请求
+type PointRenewalRequest struct {
+	DurationDay int    `json:"duration_day"` // 续费天数
+	ProductID   int    `json:"product_id"`   // 产品ID
+	ProductType string `json:"product_type"` // 产品类型: rcs/rgs/ros/rvh/rcdn
+}

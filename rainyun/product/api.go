@@ -88,3 +88,13 @@ func (c *Client) DeletePanelUser(name string) (*common.BasicOperationResponse, e
 
 	return &resp, err
 }
+
+// 积分续费
+func (c *Client) PointRenewal(req *PointRenewalRequest) (*common.BasicOperationResponse, error) {
+	path := "/product/point_renew"
+
+	var resp common.BasicOperationResponse
+	err := c.DoRequest("POST", path, req, &resp)
+
+	return &resp, err
+}
