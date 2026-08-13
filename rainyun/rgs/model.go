@@ -302,6 +302,27 @@ type RgsDetail struct {
 			CreateDate              int    `json:"CreateDate"`
 			Status                  string `json:"Status"` // 状态
 			StopReason              string `json:"StopReason"`
+			Node struct {
+				UUID string `json:"UUID"`
+				AuthKey string `json:"AuthKey"`
+				Region string `json:"Region"`
+				IPRegion string `json:"IpRegion"`
+				Machine string `json:"Machine"`
+				Product string `json:"Product"`
+				Subtype string `json:"Subtype"`
+				ChineseName string `json:"ChineseName"`
+				PhysicalNode string `json:"PhysicalNode"`
+				Config string `json:"Config"`
+				Stock interface{} `json:"Stock"`
+				StatusData string `json:"StatusData"`
+				ShowMonitorData string `json:"ShowMonitorData"`
+				UpdateTime string `json:"UpdateTime"`
+				GitRepositoryName string `json:"GitRepositoryName"`
+				CertifyRequired bool `json:"CertifyRequired"`
+				IsDisableBackup bool `json:"IsDisableBackup"`
+				IsHidden bool `json:"IsHidden"`
+				NodeName string `json:"NodeName"`
+			} `json:"Node"`
 			RewardPointsToBeCollect int    `json:"RewardPointsToBeCollect"` // 待领取的积分
 			Tag                     string `json:"Tag"`
 			OsID                    int    `json:"OsID"`
